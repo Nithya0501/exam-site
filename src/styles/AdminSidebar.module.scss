@@ -1,0 +1,53 @@
+.adminSidebar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 240px;            
+  height: 100vh;             
+  background-color: #1e1e2f; 
+  display: flex;
+  flex-direction: column;
+  padding: 20px 0;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+
+  .logo {
+    font-size: 1.8rem;
+    font-weight: 700;
+    text-align: center;
+    padding: 20px 0;
+    color: #ffffff;
+    background: linear-gradient(135deg, #5b86e5, #36d1dc);
+   
+  }
+
+  nav {
+    display: flex;
+    flex-direction: column;
+    margin-top: 30px;
+
+    a {
+      display: block;
+      padding: 14px 30px;
+      font-size: 1rem;
+      color: #bfc7d5;
+      text-decoration: none;
+      transition: all 0.25s ease;
+      border-left: 4px solid transparent;
+
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.05);
+        color: #ffffff;
+        border-left: 4px solid #36d1dc;
+      }
+    }
+
+
+    .active {
+      color: #ffffff;
+      background-color: rgba(255, 255, 255, 0.08);
+      border-left: 4px solid #5b86e5;
+      font-weight: 600;
+    }
+  }
+}

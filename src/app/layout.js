@@ -1,8 +1,9 @@
-import './globals.css';
+// app/layout.js
+import "./globals.scss";
 
 export const metadata = {
-  title: 'Exam Site',
-  description: 'A clean Next.js starter project',
+  title: "ExamSite",
+  description: "Academic Exam Dashboard",
 };
 
 export default function RootLayout({ children }) {

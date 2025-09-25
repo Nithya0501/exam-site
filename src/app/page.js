@@ -1,18 +1,24 @@
 import Link from "next/link";
-export default function home({ children }) {
+import "./globals.scss"; 
+
+export default function Home() {
   return (
-    <div className="admin-wrapper">
-      <aside className="sidebar">
-        <h2>Admin Panel</h2>
-        <nav>
-          <li>
-          <Link href="/admin/login">Login</Link><br></br>
-          <Link href="/admin/dashboard">Dashboard</Link><br></br>
-          <Link href="/admin/users">Users</Link>
-          </li>
-        </nav>
-      </aside>
-      <main className="content">{children}</main>
-    </div>
+    <main className="front-page">
+      <header className="front-hero">
+        <div className="front-text">
+          <h1>Welcome to ExamSite</h1>
+          <p>Manage exams, students, and results with ease.</p>
+          <div className="front-buttons">
+            <Link href="/admin/login" className="btn primary">
+              Admin Login
+            </Link>
+       
+          </div>
+        </div>
+        <div className="front-image">
+          <img src="/logo.png" alt="ExamSite Logo" />
+        </div>
+      </header>
+    </main>
   );
 }

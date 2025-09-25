@@ -1,0 +1,53 @@
+.dashboard-page {
+  padding: 30px;
+  background: #f4f6f9;
+  
+
+  h1 {
+    font-size: 2.2rem;
+    margin-bottom: 10px;
+    color: #333;
+    font-weight: 700;
+  }
+
+  p {
+    margin-bottom: 30px;
+    color: #666;
+    font-size: 1rem;
+  }
+
+  .dashboard-widgets {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 25px;
+
+    .card {
+      background: #ffffff;
+      padding: 25px 20px;
+      border-radius: 12px;
+      text-align: center;
+      font-weight: 600;
+      font-size: 1.1rem;
+      color: #333;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      transition: all 0.3s ease;
+      cursor: pointer;
+
+      &:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
+      }
+
+   
+      &:nth-child(1) {
+        border-top: 4px solid #36d1dc;
+      &:nth-child(2) {
+        border-top: 4px solid #5b86e5; 
+      }
+      &:nth-child(3) {
+        border-top: 4px solid #ff6b6b; 
+      }
+    }
+  }
+}
+}
