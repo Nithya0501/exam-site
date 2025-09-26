@@ -1,6 +1,5 @@
 import Link from "next/link";
 import "./globals.scss"; 
-
 export default function Home() {
   return (
     <main className="front-page">
@@ -16,7 +15,7 @@ export default function Home() {
           </div>
         </div>
         <div className="front-image">
-          <img src="/logo.png" alt="ExamSite Logo" />
+          <img src="/assets/hero.svg" alt="ExamSite Logo" />
         </div>
       </header>
     </main>

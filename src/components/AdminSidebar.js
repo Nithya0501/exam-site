@@ -1,54 +1,72 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import {
+  Home,
+  FileText,
+  Users,
+  Award,
+  Settings,
+  Menu,
+  X,
+  ChevronLeft,
+  ChevronRight,
+} from "lucide-react";
+import { useState } from "react";
 import styles from "../styles/AdminSidebar.module.scss";
 
 export default function AdminSidebar() {
   const pathname = usePathname();
+  const [collapsed, setCollapsed] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   const links = [
-    { href: "/admin/dashboard", label: "Dashboard" },
-    { href: "/admin/exams", label: "Exams" },
-    { href: "/admin/students", label: "Students" },
-    { href: "/admin/results", label: "Results" },
-    { href: "/admin/settings", label: "Settings" },
+    { href: "/admin/dashboard", label: "Dashboard", icon: <Home size={18} /> },
+    { href: "/admin/exams", label: "Exams", icon: <FileText size={18} /> },
+    { href: "/admin/students", label: "Students", icon: <Users size={18} /> },
+    { href: "/admin/results", label: "Results", icon: <Award size={18} /> },
+    { href: "/admin/settings", label: "Settings", icon: <Settings size={18} /> },
   ];
 
   return (
-    <aside className={styles.adminSidebar}>
-      <div className={styles.logo}>Exam Site</div>
-      <nav>
-        {links.map((link) => (
-          <Link
-            key={link.href}
-            href={link.href}
-            className={pathname === link.href ? styles.active : ""}
-          >
-            {link.label}
-          </Link>
-        ))}
-      </nav>
-    </aside>
+    <>
+      <button
+        className={`${styles.menuButton} ${mobileOpen ? styles.activeBtn : ""}`}
+        onClick={() => setMobileOpen(!mobileOpen)}
+      >
+      {mobileOpen ? <X size={22} /> : <Menu size={22} />}
+      </button>
+
+      <aside
+        className={`${styles.adminSidebar} 
+          ${collapsed ? styles.collapsed : ""} 
+          ${mobileOpen ? styles.open : ""}`}
+      >
+        <div className={styles.logo}>Exam Site</div>
+
+        <nav>
+          {links.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className={`${styles.link} ${
+                pathname === link.href ? styles.active : ""
+              }`}
+               onClick={() => setMobileOpen(false)}
+            >
+              <span className={styles.icon}>{link.icon}</span>
+              <span className={styles.label}>{link.label}</span>
+            </Link>
+          ))}
+        </nav>
+
+        <button
+          className={styles.collapseBtn}
+          onClick={() => setCollapsed(!collapsed)}
+        >
+          {collapsed ? <ChevronRight size={20} /> : <ChevronLeft size={20} />}
+        </button>
+      </aside>
+    </>
   );
 }
-
-
-
-
-// import Link from "next/link";
-// import styles from "../styles/AdminSidebar.module.scss";
-
-// export default function AdminSidebar() {
-//   return (
-//     <aside className={styles.adminSidebar}>
-//       <div className={styles.logo}>Exam Site</div>
-//       <nav>
-//         <Link href="/admin/dashboard">Dashboard</Link>
-//         <Link href="/admin/exams">Exams</Link>
-//         <Link href="/admin/students">Students</Link>
-//         <Link href="/admin/results">Results</Link>
-//         <Link href="/admin/settings">Settings</Link>
-//       </nav>
-//     </aside>
-//   );
-// }
