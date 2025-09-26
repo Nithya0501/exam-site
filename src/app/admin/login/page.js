@@ -1,4 +1,11 @@
 
-export default function loginPage() {
-  return <h3>loginPage</h3>;
+import LoginForm from "@/components/LoginForm"; 
+import styles from "../../../styles/LoginPage.module.scss";
+
+export default function LoginPage() {
+  return (
+    <div className={styles.container}>
+      <LoginForm />
+    </div>
+  );
 }

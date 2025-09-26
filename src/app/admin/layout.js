@@ -1,12 +1,16 @@
-import AdminSidebar from "../../components/AdminSidebar";
 
+"use client";
+import { usePathname } from "next/navigation";
+import AdminSidebar from "@/components/AdminSidebar";
 
+export default function AdminLayout({ children }) {
+  const pathname = usePathname();
 
+  const isLoginPage = pathname === "/admin/login";
 
-export default function Layout({ children }) {
   return (
-    <div className="admin-container">
-      <AdminSidebar />
+    <div className="admin-layout">
+      {!isLoginPage && <AdminSidebar />}
       <main className="admin-content">{children}</main>
     </div>
   );
