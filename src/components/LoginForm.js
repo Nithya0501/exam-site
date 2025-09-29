@@ -1,34 +1,42 @@
 "use client";
 import { useState } from "react";
-import { useRouter } from "next/navigation"; 
-import { FaUser, FaLock, FaEye, FaEyeSlash  } from "react-icons/fa";
+import { useRouter } from "next/navigation";
+import { FaUser, FaLock, FaEye, FaEyeSlash } from "react-icons/fa";
 import styles from "../styles/LoginForm.module.scss";
 
-export default function LoginForm() {
+export default function LoginPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [remember, setRemember] = useState(false);
-    const [showPassword, setShowPassword] = useState(false);
-  const router = useRouter()
-  const togglePassword = () => {
-    setShowPassword(!showPassword);
-  };
+  const router = useRouter();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log({ username, password, remember });
-     if (username === "anu" && password === "1234") {
-      router.push("/admin/dashboard"); 
-    } else {
-      alert("Invalid username or password");
+  const handleLogin = async () => {
+    try {
+      const res = await fetch("http://localhost:5000/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password }),
+      });
+      const data = await res.json();
+
+      if (res.ok) {
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("user", JSON.stringify(data.user));
+        router.push("/admin/dashboard");
+      } else {
+        alert(data.message);
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Something went wrong. Try again.");
     }
   };
 
   return (
     <div className={styles.container}>
-    
-      <form className={styles.form} onSubmit={handleSubmit}>
-        <h2>Login</h2>
+      <form className={styles.form} onSubmit={(e) => e.preventDefault()}>
+        <h2>Admin Login</h2>
 
         <div className={styles.inputWrapper}>
           <FaUser className={styles.icon} />
@@ -37,26 +45,27 @@ export default function LoginForm() {
             placeholder="Username"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
-            required
           />
         </div>
 
+      
         <div className={styles.inputWrapper}>
           <FaLock className={styles.icon} />
           <input
-            type={showPassword ? "text" : "password"} 
+            type={showPassword ? "text" : "password"}
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            required
           />
-             <span className={styles.passwordToggle} onClick={togglePassword}>
+          <span
+            className={styles.passwordToggle}
+            onClick={() => setShowPassword((prev) => !prev)}
+          >
             {showPassword ? <FaEyeSlash /> : <FaEye />}
           </span>
         </div>
-
-        <label className={styles.remember}>
-          <input
+      <label className={styles.remember}>
+       <input
             type="checkbox"
             checked={remember}
             onChange={(e) => setRemember(e.target.checked)}
@@ -64,17 +73,13 @@ export default function LoginForm() {
           Remember me
         </label>
 
-        <button type="submit">Login</button>
-
-        <p className={styles.forgot}>
-          <a href="#">Forgot password?</a>
-        </p>
+        <button type="submit" onClick={handleLogin}>
+          Login
+        </button>
       </form>
     </div>
   );
 }
-
-
 
 
 

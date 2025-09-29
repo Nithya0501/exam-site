@@ -1,114 +1,53 @@
-.dashboardPage {
-  padding: 30px;
-  background-color: #f5f5f7;
+$primary-color: #9d40ad;
+$secondary-color: #f5f7fa;
+$text-color: #333;
+$card-bg: #ffffff;
+$shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+
+.dashboardContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   min-height: 100vh;
-  
+  background: $secondary-color;
+  padding: 20px;
+}
+
+.card {
+  background: $card-bg;
+  border-radius: 12px;
+  padding: 40px;
+  max-width: 420px;
+  width: 100%;
+  text-align: center;
+  box-shadow: $shadow;
+  transition: transform 0.2s ease;
+
+  &:hover {
+    transform: translateY(-5px);
+  }
+
   h1 {
-    font-size: 2rem;
+    color: $primary-color;
+    font-size: 28px;
     margin-bottom: 10px;
-    color: #333;
   }
 
   p {
-    margin-bottom: 30px;
-    color: #555;
-    font-size: 1rem;
+    color: $text-color;
+    font-size: 16px;
+    margin: 8px 0;
   }
 
-  .dashboardWidgets {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-
-    .card {
-      background-color: #ffffff;
-      border-radius: 12px;
-      padding: 20px;
-      min-width: 200px;
-      flex: 1;
-      box-shadow: 0 4px 15px rgba(186, 104, 200, 0.15);
-      transition: all 0.3s ease;
-      cursor: pointer;
-
-      &:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 8px 25px rgba(186, 104, 200, 0.25);
-      }
-
-      &:first-child {
-        border-left: 4px solid rgb(186, 104, 200);
-      }
-
-      &:nth-child(2) {
-        border-left: 4px solid rgb(186, 104, 200);
-      }
-
-      &:nth-child(3) {
-        border-left: 4px solid rgb(186, 104, 200);
-      }
-
-      font-weight: 600;
-      color: #333;
-      text-align: center;
-      font-size: 1.1rem;
-    }
+  .role {
+    font-weight: bold;
+    color: darken($primary-color, 15%);
   }
+}
 
-  @media (max-width: 1024px) {
-    padding: 20px;
-
-    .dashboard-widgets {
-      gap: 15px;
-
-      .card {
-        min-width: 180px;
-        padding: 18px;
-        font-size: 1rem;
-      }
-    }
-  }
-
-
-  @media (max-width: 768px) {
-    padding: 15px;
-
-    .dashboard-widgets {
-      flex-direction: column;
-
-      .card {
-        width: 100%;
-        min-width: unset;
-      }
-    }
-  }
-
-  @media (max-width: 1024px) {
-    padding: 20px;
-
-    .dashboard-widgets {
-      gap: 15px;
-
-      .card {
-        min-width: 180px;
-        padding: 18px;
-        font-size: 1rem;
-      }
-    }
-  }
-
-  @media (max-width: 768px) {
-    padding: 15px;
-
-    .dashboard-widgets {
-      flex-direction: column;
-
-      .card {
-        width: 100%;
-        min-width: unset;
-      }
-    }
-  }
-
-
-
+.loading {
+  font-size: 20px;
+  color: $primary-color;
+  text-align: center;
+  margin-top: 50px;
 }

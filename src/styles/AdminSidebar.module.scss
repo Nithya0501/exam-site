@@ -1,7 +1,7 @@
 $sidebar-bg: #9d40ad;
 $hover-bg: rgba(255, 255, 255, 0.15);
 $active-bg: rgba(255, 255, 255, 0.25);
-$contrast-hover: #ffffff; 
+$contrast-hover: #ffffff;
 
 .adminSidebar {
   position: fixed;
@@ -17,7 +17,6 @@ $contrast-hover: #ffffff;
   padding: 20px 0;
   box-shadow: 2px 0 8px rgba(0, 0, 0, 0.15);
   transition: all 0.3s ease;
-
 
   .logo {
     text-align: center;
@@ -35,18 +34,27 @@ $contrast-hover: #ffffff;
     display: flex;
     flex-direction: column;
     gap: 5px;
+    flex: 1;
+  }
+
+  .logoutContainer {
+    margin-top: auto; 
+    padding: 10px 0;
   }
 }
 
-.link {
+.link, .logoutBtn {
   display: flex;
   align-items: center;
   padding: 12px 20px;
-  color: #f4f4f4;
-  text-decoration: none;
   font-size: 1rem;
   font-weight: 500;
- 
+  color: #f4f4f4;
+  text-decoration: none;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
 
   .icon {
     margin-right: 12px;
@@ -85,7 +93,7 @@ $contrast-hover: #ffffff;
   border: none;
   border-radius: 6px;
   cursor: pointer;
-  transition:0.3s;
+  transition: 0.3s;
 
   &:hover {
     background: darken($sidebar-bg, 5%);
@@ -104,7 +112,6 @@ $contrast-hover: #ffffff;
   color: #fff;
   background-color: transparent;
 
-
   &:hover {
     background: rgba(255, 255, 255, 0.35);
   }
@@ -117,7 +124,7 @@ $contrast-hover: #ffffff;
     display: none;
   }
 
-  .link {
+  .link, .logoutBtn {
     justify-content: center;
 
     .icon {

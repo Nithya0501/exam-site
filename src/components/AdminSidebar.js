@@ -11,6 +11,8 @@ import {
   X,
   ChevronLeft,
   ChevronRight,
+  LogOut,
+
 } from "lucide-react";
 import { useState } from "react";
 import styles from "../styles/AdminSidebar.module.scss";
@@ -27,6 +29,11 @@ export default function AdminSidebar() {
     { href: "/admin/results", label: "Results", icon: <Award size={18} /> },
     { href: "/admin/settings", label: "Settings", icon: <Settings size={18} /> },
   ];
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    router.push("/admin/login");
+  };
 
   return (
     <>
@@ -34,7 +41,7 @@ export default function AdminSidebar() {
         className={`${styles.menuButton} ${mobileOpen ? styles.activeBtn : ""}`}
         onClick={() => setMobileOpen(!mobileOpen)}
       >
-      {mobileOpen ? <X size={22} /> : <Menu size={22} />}
+        {mobileOpen ? <X size={22} /> : <Menu size={22} />}
       </button>
 
       <aside
@@ -49,16 +56,21 @@ export default function AdminSidebar() {
             <Link
               key={link.href}
               href={link.href}
-              className={`${styles.link} ${
-                pathname === link.href ? styles.active : ""
-              }`}
-               onClick={() => setMobileOpen(false)}
+              className={`${styles.link} ${pathname === link.href ? styles.active : ""
+                }`}
+              onClick={() => setMobileOpen(false)}
             >
               <span className={styles.icon}>{link.icon}</span>
               <span className={styles.label}>{link.label}</span>
             </Link>
           ))}
         </nav>
+        <div className={styles.logoutContainer}>
+          <button className={styles.logoutBtn} onClick={handleLogout}>
+            <span className={styles.icon}><LogOut size={18} /></span>
+            <span className={styles.label}>Logout</span>
+          </button>
+        </div>
 
         <button
           className={styles.collapseBtn}
