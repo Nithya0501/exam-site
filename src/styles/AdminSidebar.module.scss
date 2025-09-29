@@ -7,7 +7,6 @@ $contrast-hover: #ffffff;
   position: fixed;
   top: 0;
   left: 0;
-  max-width: 240px;
   width: 20%;
   height: 100vh;
   background: $sidebar-bg;
@@ -17,6 +16,7 @@ $contrast-hover: #ffffff;
   padding: 20px 0;
   box-shadow: 2px 0 8px rgba(0, 0, 0, 0.15);
   transition: all 0.3s ease;
+  
 
   .logo {
     text-align: center;
@@ -141,6 +141,7 @@ $contrast-hover: #ffffff;
       transform: translateX(0);
     }
   }
+
 }
 
 @media (max-width: 360px) {

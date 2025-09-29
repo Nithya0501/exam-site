@@ -6,9 +6,7 @@ $shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 
 .dashboardContainer {
   display: flex;
-  justify-content: center;
   align-items: center;
-  min-height: 100vh;
   background: $secondary-color;
   padding: 20px;
 }
@@ -17,8 +15,8 @@ $shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   background: $card-bg;
   border-radius: 12px;
   padding: 40px;
-  max-width: 420px;
-  width: 100%;
+  width: 80%;
+
   text-align: center;
   box-shadow: $shadow;
   transition: transform 0.2s ease;
