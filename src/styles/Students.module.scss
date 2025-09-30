@@ -1,69 +1,126 @@
-$primary-color: #6a0dad;
-$hover-color: #5800b0;
-$danger-color: #e63946;
-$bg-color: #f9f9f9;
-$text-color: #333;
+.studentsTableWrapper {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border-radius: 8px;
+}
 
-.studentsPage {
-  padding: 2rem;
-  background-color: $bg-color;
-  min-height: 100vh;
 
-  h1 {
-    color: $primary-color;
-    margin-bottom: 1.5rem;
+.nameHeader {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+
+  span {
+    font-weight: 600;
   }
 
-  .studentsTable {
-    width: 100%;
-    border-collapse: collapse;
-    background: #fff;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    border-radius: 8px;
-    overflow: hidden;
+  .searchWrapper {
+    position: relative;
+  
 
-    th {
-      padding: 12px;
-      text-align: left;
-      background-color: $primary-color;
-      color: white;
+    .searchIcon {
+      position: absolute;
+      top: 50%;
+      left: 8px;
+      transform: translateY(-50%);
+      color: #888;
+      pointer-events: none;
+    }
+
+    .searchInput {
+      width: 100%;
+      padding: 5px 8px 5px 28px; 
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 0.9rem;
+
+      &:focus {
+        border-color: #9d40ad;
+        box-shadow: 0 0 0 1px #9d40ad;
+        outline: none;
+      }
+    }
+  }
+}
+
+
+.studentsTable {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 650px;
+  font-family: 'Arial', sans-serif;
+
+  th, td {
+    padding: 12px 15px;
+    border: 1px solid #e0e0e0;
+    text-align: left;
+  }
+
+  th {
+    background-color: #f5f5f5;
+    font-weight: 600;
+    color: #333;
+  }
+
+  tbody tr:hover {
+    background-color: #fafafa;
+  }
+
+  .edit, .delete {
+    border: none;
+    padding: 6px 10px;
+    margin-right: 5px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: 0.2s;
+  }
+
+  .edit { background-color: #4caf50; color: #fff; }
+  .edit:hover { background-color: #45a049; }
+
+  .delete { background-color: #e53935; color: #fff; }
+  .delete:hover { background-color: #d32f2f; }
+
+
+  @media (max-width: 600px) {
+    display: block;
+    thead { display: none; }
+    tbody { display: block; }
+
+    tr {
+      display: block;
+      margin-bottom: 1rem;
+      padding: 10px;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.08);
     }
 
     td {
-      padding: 12px;
-      border-bottom: 1px solid #ddd;
-      color: $text-color;
-    }
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 12px;
+      text-align: right;
+      position: relative;
 
-    tr:last-child td {
-      border-bottom: none;
-    }
-
-    button {
-      padding: 4px 8px;
-      border: none;
-      border-radius: 4px;
-      font-size: 0.85rem;
-      cursor: pointer;
-      transition: all 0.2s ease;
-
-      &.edit {
-        background-color: $primary-color;
-        color: white;
-
-        &:hover {
-          background-color: $hover-color;
-        }
+      &::before {
+        content: attr(data-label);
+        font-weight: bold;
+        text-align: left;
+        color: #555;
       }
 
-      &.delete {
-        background-color: $danger-color;
-        color: white;
-
-        &:hover {
-          opacity: 0.9;
-        }
+      .edit, .delete {
+        margin-left: 5px;
       }
+    }
+
+   
+    .nameHeader .searchWrapper {
+      display: none;
     }
   }
 }

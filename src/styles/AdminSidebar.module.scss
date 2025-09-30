@@ -7,8 +7,8 @@ $contrast-hover: #ffffff;
   position: fixed;
   top: 0;
   left: 0;
-  max-width: 240px;
-  width: 20%;
+  max-width: 355px;
+  width: 17%;
   height: 100vh;
   background: $sidebar-bg;
   color: #fff;
@@ -38,12 +38,13 @@ $contrast-hover: #ffffff;
   }
 
   .logoutContainer {
-    margin-top: auto; 
+    margin-top: auto;
     padding: 10px 0;
   }
 }
 
-.link, .logoutBtn {
+.link,
+.logoutBtn {
   display: flex;
   align-items: center;
   padding: 12px 20px;
@@ -124,7 +125,8 @@ $contrast-hover: #ffffff;
     display: none;
   }
 
-  .link, .logoutBtn {
+  .link,
+  .logoutBtn {
     justify-content: center;
 
     .icon {
@@ -133,14 +135,17 @@ $contrast-hover: #ffffff;
   }
 }
 
+
 @media (max-width: 768px) {
   .adminSidebar {
     width: 200px;
     transform: translateX(-100%);
+
     &.open {
       transform: translateX(0);
     }
   }
+
 }
 
 @media (max-width: 360px) {

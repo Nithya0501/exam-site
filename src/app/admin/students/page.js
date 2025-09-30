@@ -1,30 +1,55 @@
-"use client";
-import { useState } from "react";
+'use client';
+import React, { useState, useEffect } from 'react';
 import StudentsTable from "../../../components/StudentsTable";
-import styles from "../../../styles/Students.module.scss";
 
 export default function StudentsPage() {
-  const [students, setStudents] = useState([
-    { id: 1, name: "John Doe", email: "john@example.com", phone: "1234567890" },
-    { id: 2, name: "Jane Smith", email: "jane@example.com", phone: "9876543210" },
-    { id: 3, name: "Michael Johnson", email: "michael@example.com", phone: "4567891230" },
-  ]);
+  const [students, setStudents] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const handleEdit = (student) => {
-    alert(`Edit ${student.name}`);
-    // Implement modal or navigate to edit page
+  useEffect(() => {
+    const fetchStudents = async () => {
+      try {
+        const response = await fetch("http://localhost:5000/api/students/student");
+        if (!response.ok) throw new Error("Failed to fetch students");
+        const data = await response.json();
+
+
+        const dataWithIds = data.map((s, index) => ({ ...s, id: s.id || index + 1 }));
+
+        setStudents(dataWithIds);
+      } catch (error) {
+        console.error("Error fetching students:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchStudents();
+  }, []);
+
+
+  const handleUpdate = (id, updatedData) => {
+    setStudents(prev =>
+      prev.map(s => (s.id === id ? { ...s, ...updatedData } : s))
+    );
   };
 
-  const handleDelete = (student) => {
-    if (confirm(`Are you sure you want to delete ${student.name}?`)) {
-      setStudents(students.filter((s) => s.id !== student.id));
-    }
+
+  const handleDelete = (id) => {
+    setStudents(prev => prev.filter(s => s.id !== id));
   };
+
+  if (loading) return <p>Loading students...</p>;
 
   return (
-    <div className={styles.studentsPage}>
-      <h1>Students</h1>
-      <StudentsTable students={students} onEdit={handleEdit} onDelete={handleDelete} />
+    <div>
+      <h1>Students List</h1>
+      <StudentsTable
+        students={students}
+        onUpdate={handleUpdate}  
+        onDelete={handleDelete}  
+      />
     </div>
   );
 }
+
