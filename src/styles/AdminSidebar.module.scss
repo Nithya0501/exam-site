@@ -7,12 +7,8 @@ $contrast-hover: #ffffff;
   position: fixed;
   top: 0;
   left: 0;
-<<<<<<< HEAD
   max-width: 355px;
   width: 17%;
-=======
-  width: 20%;
->>>>>>> 1cfcea2e2889472ecd8bd018bb2892402c44661d
   height: 100vh;
   background: $sidebar-bg;
   color: #fff;
@@ -21,7 +17,6 @@ $contrast-hover: #ffffff;
   padding: 20px 0;
   box-shadow: 2px 0 8px rgba(0, 0, 0, 0.15);
   transition: all 0.3s ease;
-  
 
   .logo {
     text-align: center;
