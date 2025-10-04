@@ -24,7 +24,7 @@ export default function AdminSidebar() {
 
   const links = [
     { href: "/admin/dashboard", label: "Dashboard", icon: <Home size={18} /> },
-    { href: "/admin/exams", label: "Exams", icon: <FileText size={18} /> },
+    { href: "/admin/course", label: "Course", icon: <FileText size={18} /> },
     { href: "/admin/students", label: "Students", icon: <Users size={18} /> },
     { href: "/admin/results", label: "Results", icon: <Award size={18} /> },
     { href: "/admin/settings", label: "Settings", icon: <Settings size={18} /> },
