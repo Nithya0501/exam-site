@@ -85,24 +85,13 @@ body {
   min-height: 100vh;
 
   .admin-content {
-    // flex: 1; 
+    
     padding: 1rem;
     transition: all 0.3s ease;
     width: 79%;
     margin-left: auto; 
   }
 
-
-  @media (max-width: 1024px) {
-    flex-direction: column;
-
-    .admin-content {
-      width: 100%;
-      margin-left: 0; 
-    }
-  }
-
- 
   @media (max-width: 768px) {
     .admin-content {
       width: 100%;

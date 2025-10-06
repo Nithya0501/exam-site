@@ -3,11 +3,7 @@
 import styles from "../styles/CourseTable.module.scss";
 import { FaTrash, FaEdit } from "react-icons/fa";
 
-export default function CourseTable({ courses, filter, onDelete, onEdit }) {
-  const filteredCourses = (courses || []).filter((c) =>
-    c.name?.toLowerCase().includes((filter || "").toLowerCase())
-  );
-
+export default function CourseTable({ courses, onEdit, onDelete }) {
   return (
     <table className={styles.coursesTable}>
       <thead>
@@ -18,24 +14,16 @@ export default function CourseTable({ courses, filter, onDelete, onEdit }) {
         </tr>
       </thead>
       <tbody>
-        {filteredCourses.length > 0 ? (
-          filteredCourses.map((c, index) => (
-            <tr key={c.id || index}>
+        {courses.length > 0 ? (
+          courses.map((c) => (
+            <tr key={c._id || c.id}>
               <td>{c.name}</td>
               <td>{c.description}</td>
               <td className={styles.actionCell}>
-                <button
-                  className={styles.editBtn}
-                  onClick={() => onEdit?.(c)}
-                  title="Edit Course"
-                >
+                <button className={styles.editBtn} onClick={() => onEdit(c)}>
                   <FaEdit size={18} />
                 </button>
-                <button
-                  className={styles.deleteBtn}
-                  onClick={() => onDelete(c.id)}
-                  title="Delete Course"
-                >
+                <button className={styles.deleteBtn} onClick={() => onDelete(c._id || c.id)}>
                   <FaTrash size={18} />
                 </button>
               </td>

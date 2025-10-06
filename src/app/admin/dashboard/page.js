@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import styles from "../../../styles/dashboard.module.scss";
-
+import { apiUrl } from "../../../lib/api";
 export default function DashboardPage() {
   const [user, setUser] = useState(null);
   const router = useRouter();
@@ -13,7 +13,7 @@ export default function DashboardPage() {
 
     const fetchData = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/admin/dashboard", {
+        const res = await fetch(apiUrl("/api/admin/dashboard"), {
           headers: { Authorization: `Bearer ${token}` },
         });
         if (res.ok) {

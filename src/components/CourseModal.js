@@ -1,12 +1,12 @@
 "use client";
 
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import styles from "../styles/CourseModal.module.scss";
 
-export default function CourseModal({ isOpen, onClose, onSave ,course}) {
+export default function CourseModal({ isOpen, onClose, onSave, course }) {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  
+
   useEffect(() => {
     if (course) {
       setName(course.name || "");
@@ -16,20 +16,19 @@ export default function CourseModal({ isOpen, onClose, onSave ,course}) {
       setDescription("");
     }
   }, [course]);
-    const handleSubmit = (e) => {
+
+  const handleSubmit = (e) => {
     e.preventDefault();
     if (!name || !description) return alert("Both fields are required!");
-    
-    // Pass back the original id if editing
-    onSave({ id: course?.id, name, description });
+    onSave({ id: course?.id || course?._id, name, description });
   };
 
   if (!isOpen) return null;
 
-  return (  
+  return (
     <div className={styles.modalOverlay}>
       <div className={styles.modalContent}>
-        <h2>Create Course</h2>
+        <h2>{course ? "Edit Course" : "Create Course"}</h2>
         <input
           type="text"
           placeholder="Course Name"
@@ -42,7 +41,7 @@ export default function CourseModal({ isOpen, onClose, onSave ,course}) {
           onChange={(e) => setDescription(e.target.value)}
         />
         <div className={styles.modalActions}>
-          <button onClick={handleSubmit}>Submit</button>
+          <button onClick={handleSubmit}>{course ? "Update" : "Submit"}</button>
           <button onClick={onClose} className={styles.cancelBtn}>
             Cancel
           </button>
