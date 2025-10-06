@@ -66,10 +66,12 @@ export default function AdminSidebar() {
           ))}
         </nav>
         <div className={styles.logoutContainer}>
+          <Link href ="/admin/login">
           <button className={styles.logoutBtn} onClick={handleLogout}>
             <span className={styles.icon}><LogOut size={18} /></span>
             <span className={styles.label}>Logout</span>
           </button>
+          </Link>
         </div>
 
         <button
