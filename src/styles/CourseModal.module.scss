@@ -41,8 +41,8 @@
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
 
     &:focus {
-      border-color: #9d40ad;
-      box-shadow: #641272;
+      border-color: var(--btn-color);
+      box-shadow: var(--box-color);
       outline: none;
     }
   }
@@ -74,15 +74,15 @@
 
   
     button:first-child {
-      background-color:#9d40ad;
+      background-color:var(--btn-color);
       color: #fff;
 
       &:hover {
- background-color: #641272;
+ background-color: var(--hover-color);
       }
 
       &:disabled {
-        background-color: #641272;
+        background-color: var(--box-color);
         cursor: not-allowed;
       }
     }

@@ -1,11 +1,8 @@
-$primary-color: #c05ed1;
-$hover-color:#641272 ;
-$danger-color: #e63946;
-$success-color: #28a745;
 $cancel-color: #6c757d;
 $text-color: #333;
 $bg-light: #f9f9f9;
 $border-color: #ddd;
+
 
 .tableContainer {
   width: 100%;
@@ -49,14 +46,14 @@ $border-color: #ddd;
 
         &:focus {
           outline: none;
-          border-color: $primary-color;
-          box-shadow: 0 0 6px rgba($primary-color, 0.3);
+          border-color: var(--primary-color);
+          box-shadow: 0 0 6px rgba(var(--primary-color), 0.3);
         }
       }
     }
 
     .filterButton {
-      background: $primary-color;
+      background: var(--primary-color);
       color: #fff;
       border: none;
       padding: 8px 12px;
@@ -66,7 +63,7 @@ $border-color: #ddd;
       transition: all 0.3s ease;
 
       &:hover {
-        background: $hover-color;
+        background: var(--hover-color);
       }
     }
   }
@@ -86,7 +83,7 @@ $border-color: #ddd;
     }
 
     th {
-      background: $primary-color;
+      background: var(--primary-color);
       color: #fff;
       font-weight: 500;
     }
@@ -109,12 +106,12 @@ $border-color: #ddd;
 
       &:focus {
         outline: none;
-        border-color: $primary-color;
-        box-shadow: 0 0 4px rgba($primary-color, 0.3);
+        border-color: var(--primary-color);
+        box-shadow: 0 0 4px rgba(var(--primary-color), 0.3);
       }
     }
 
-    .editBtn, .saveBtn, .cancelBtn, .deleteBtn {
+    .editBtn, .deleteBtn {
       border: none;
       border-radius: 6px;
       padding: 6px 10px;
@@ -128,10 +125,9 @@ $border-color: #ddd;
       }
     }
 
-    .editBtn { background: $primary-color; color: #fff; &:hover { background: $hover-color; } }
-    .deleteBtn { background: $danger-color; color: #fff; }
-    .saveBtn { background: $success-color; color: #fff; }
-    .cancelBtn { background: $cancel-color; color: #fff; }
+    .editBtn { background: var(--primary-color); color: #fff; &:hover { background: var(--hover-color); } }
+    .deleteBtn { background: var(--danger-color); color: #fff; }
+
   }
 
   .pagination {
@@ -143,8 +139,8 @@ $border-color: #ddd;
 
     button {
       background: #fff;
-      color: $primary-color;
-      border: 1px solid $primary-color;
+      color: var(--primary-color);
+      border: 1px solid var(--primary-color);
       padding: 6px 12px;
       border-radius: 8px;
       cursor: pointer;
@@ -152,7 +148,7 @@ $border-color: #ddd;
       transition: all 0.2s ease;
 
       &:hover:not(:disabled) {
-        background: $primary-color;
+        background: var(--primary-color);
         color: #fff;
       }
 
@@ -165,7 +161,7 @@ $border-color: #ddd;
     }
 
     .activePage {
-      background: $primary-color;
+      background: var(--primary-color);
       color: #fff;
       font-weight: bold;
       pointer-events: none;

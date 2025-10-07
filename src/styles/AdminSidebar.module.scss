@@ -1,4 +1,4 @@
-$sidebar-bg: #9d40ad;
+
 $hover-bg: rgba(255, 255, 255, 0.15);
 $active-bg: rgba(255, 255, 255, 0.25);
 $contrast-hover: #ffffff;
@@ -10,7 +10,7 @@ $contrast-hover: #ffffff;
   max-width: 355px;
   width: 17%;
   height: 100vh;
-  background: $sidebar-bg;
+  background: var(--btn-color);
   color: #fff;
   display: flex;
   flex-direction: column;
@@ -88,7 +88,7 @@ $contrast-hover: #ffffff;
   top: 15px;
   left: 15px;
   z-index: 1200;
-  background: $sidebar-bg;
+  background: var(--btn-color);
   color: #fff;
   padding: 8px 10px;
   border: none;
@@ -97,7 +97,8 @@ $contrast-hover: #ffffff;
   transition: 0.3s;
 
   &:hover {
-    background: darken($sidebar-bg, 5%);
+    // background: darken($sidebar-bg, 5%);
+    background: var(--btn-color);
   }
 }
 

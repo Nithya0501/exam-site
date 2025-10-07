@@ -37,8 +37,8 @@
       font-size: 0.9rem;
 
       &:focus {
-        border-color: #9d40ad;
-        box-shadow: 0 0 0 1px #9d40ad;
+        border-color: var(--btn-color);
+        box-shadow: 0 0 0 1px var(--btn-color);
         outline: none;
       }
     }
@@ -50,7 +50,7 @@
   width: 100%;
   border-collapse: collapse;
   min-width: 650px;
-  font-family: 'Arial', sans-serif;
+  font-family: var(--font-family);
 
   th, td {
     padding: 12px 15px;
@@ -81,8 +81,8 @@
   .edit { background-color: #4caf50; color: #fff; }
   .edit:hover { background-color: #45a049; }
 
-  .delete { background-color: #e53935; color: #fff; }
-  .delete:hover { background-color: #d32f2f; }
+  .delete { background-color:var(--danger-color); color: #fff; }
+  .delete:hover { background-color:var(--danger-color); }
 
 
   @media (max-width: 600px) {
