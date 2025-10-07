@@ -80,7 +80,7 @@ export default function StudentsTable({ students, onUpdate, onDelete }) {
 
   return (
     <div className={styles.tableContainer}>
-  
+     <h1>Students List</h1>
       <div className={styles.topControls}>
         <div className={styles.rightControls}>
           <div className={styles.searchBox}>

@@ -45,7 +45,6 @@ export default function StudentsPage() {
 
   return (
     <div>
-      <h1>Students List</h1>
       <StudentsTable
         students={students}
         onUpdate={handleUpdate}
