@@ -1,15 +1,16 @@
-import "./globals.scss";
+"use client";
 
-export const metadata = {
-  title: "ExamSite",
-  description: "Academic Exam Dashboard",
-};
+import { Provider } from "react-redux";
+import "./globals.scss";
+import { store } from "../redux/store";
 
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <Provider store={store}>{children}</Provider>
+      </body>
     </html>
   );
 }

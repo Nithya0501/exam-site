@@ -17,6 +17,7 @@ $contrast-hover: #ffffff;
   padding: 20px 0;
   box-shadow: 2px 0 8px rgba(0, 0, 0, 0.15);
   transition: all 0.3s ease;
+  z-index: 1;
 
   .logo {
     text-align: center;
