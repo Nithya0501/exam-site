@@ -3,22 +3,21 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import StudentsTable from "../../../components/StudentsTable";
+import { apiUrl } from "../../../lib/api";
 import {
-  fetchStudents,
+  setStudents,
   updateStudent,
   deleteStudent,
   setSearchTerm,
   toggleSort,
   setCurrentPage,
-} from "../../../redux/slices/StudentSlices"; 
+} from "../../../redux/slices/StudentSlices";
 
 export default function StudentsPage() {
   const dispatch = useDispatch();
-
   const {
     students,
     loading,
-    error,
     searchTerm,
     sortAsc,
     currentPage,
@@ -26,7 +25,24 @@ export default function StudentsPage() {
   } = useSelector((state) => state.students);
 
   useEffect(() => {
-    dispatch(fetchStudents());
+    const fetchStudents = async () => {
+      try {
+        const res = await fetch(apiUrl("/api/students/student"));
+        if (!res.ok) throw new Error("Failed to fetch students");
+        const data = await res.json();
+
+        const dataWithIds = data.map((s, index) => ({
+          ...s,
+          id: s.id || index + 1,
+        }));
+
+        dispatch(setStudents(dataWithIds));
+      } catch (err) {
+        console.error("Error fetching students:", err);
+      }
+    };
+
+    fetchStudents();
   }, [dispatch]);
 
 
@@ -52,40 +68,30 @@ export default function StudentsPage() {
 
   const getPageNumbers = () => {
     const pages = [];
-    const pageNumberLimit = 5;
-    let start = Math.max(1, currentPage - Math.floor(pageNumberLimit / 2));
-    let end = Math.min(totalPages, start + pageNumberLimit - 1);
-
-    if (end - start + 1 < pageNumberLimit) {
-      start = Math.max(1, end - pageNumberLimit + 1);
-    }
-
+    let start = Math.max(1, currentPage - 2);
+    let end = Math.min(totalPages, start + 4);
+    if (end - start + 1 < 5) start = Math.max(1, end - 4);
     for (let i = start; i <= end; i++) pages.push(i);
     return pages;
   };
 
   if (loading) return <p>Loading students...</p>;
-  if (error) return <p>Error: {error}</p>;
 
   return (
-    <div>
-      <StudentsTable
-        students={currentStudents}
-        onUpdate={(id, updatedData) =>
-          dispatch(updateStudent({ id, updatedData }))
-        }
-        onDelete={(id) => dispatch(deleteStudent(id))}
-        searchTerm={searchTerm}
-        setSearchTerm={(term) => dispatch(setSearchTerm(term))}
-        toggleSort={() => dispatch(toggleSort())}
-        currentPage={currentPage}
-        totalPages={totalPages}
-        goPrev={goPrev}
-        goNext={goNext}
-        getPageNumbers={getPageNumbers}
-        setCurrentPage={(num) => dispatch(setCurrentPage(num))}
-      />
-    </div>
+    <StudentsTable
+      students={currentStudents}
+      onUpdate={(id, data) => dispatch(updateStudent({ id, data }))}
+      onDelete={(id) => dispatch(deleteStudent(id))}
+      searchTerm={searchTerm}
+      setSearchTerm={(term) => dispatch(setSearchTerm(term))}
+      toggleSort={() => dispatch(toggleSort())}
+      currentPage={currentPage}
+      totalPages={totalPages}
+      goPrev={goPrev}
+      goNext={goNext}
+      getPageNumbers={getPageNumbers}
+      setCurrentPage={(num) => dispatch(setCurrentPage(num))}
+    />
   );
 }
 

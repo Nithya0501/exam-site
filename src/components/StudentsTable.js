@@ -40,8 +40,10 @@ export default function StudentsTable({
   };
 
   const cancelEdit = () => setEditingId(null);
+
   const handleChange = (e) =>
     setEditData({ ...editData, [e.target.name]: e.target.value });
+
   const saveEdit = (id) => {
     onUpdate(id, editData);
     setEditingId(null);
@@ -51,7 +53,6 @@ export default function StudentsTable({
     <div className={styles.studentPage}>
       <h1>Students List</h1>
 
-   
       <div className={styles.controls}>
         <div className={styles.filterWrapper}>
           <FaSearch className={styles.filterIcon} />
@@ -59,113 +60,113 @@ export default function StudentsTable({
             type="text"
             placeholder="Search by name..."
             value={searchTerm}
-            onChange={(e) => {
-              setSearchTerm(e.target.value);
-              setCurrentPage(1);
-            }}
+            onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
 
         <button onClick={toggleSort}>
-          <FaFilter />
+          <FaFilter /> Sort
         </button>
       </div>
-
- 
-      <table className={styles.studentTable}>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Phone Number</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {students.length === 0 && (
+      <div className="studentTableContainer">
+        <table className={styles.studentTable}>
+          <thead>
             <tr>
-              <td colSpan={4} style={{ textAlign: "center" }}>
-                No students found
-              </td>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>Action</th>
             </tr>
-          )}
-          {students.map((student) => (
-            <tr key={student.id}>
-              <td>
-                {editingId === student.id ? (
-                  <input
-                    name="name"
-                    value={editData.name}
-                    onChange={handleChange}
-                  />
-                ) : (
-                  student.name
-                )}
-              </td>
-              <td>
-                {editingId === student.id ? (
-                  <input
-                    name="email"
-                    value={editData.email}
-                    onChange={handleChange}
-                  />
-                ) : (
-                  student.email
-                )}
-              </td>
-              <td>
-                {editingId === student.id ? (
-                  <input
-                    name="phone"
-                    value={editData.phone}
-                    onChange={handleChange}
-                  />
-                ) : (
-                  student.phone
-                )}
-              </td>
-              <td className={styles.actionCell}>
-                {editingId === student.id ? (
-                  <>
-                    <button
-                      className={styles.editBtn}
-                      onClick={() => saveEdit(student.id)}
-                    >
-                      <FaSave />
-                    </button>
-                    <button className={styles.cancelBtn} onClick={cancelEdit}>
-                      <FaTimes />
-                    </button>
-                  </>
-                ) : (
-                  <>
-                    <button
-                      className={styles.editBtn}
-                      onClick={() => startEdit(student)}
-                    >
-                      <FaEdit />
-                    </button>
-                    <button
-                      className={styles.deleteBtn}
-                      onClick={() => onDelete(student.id)}
-                    >
-                      <FaTrash />
-                    </button>
-                  </>
-                )}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {students.length === 0 ? (
+              <tr>
+                <td colSpan={4} style={{ textAlign: "center", padding: "1rem" }}>
+                  No students found
+                </td>
+              </tr>
+            ) : (
+              students.map((student) => (
+                <tr key={student.id}>
+                  <td>
+                    {editingId === student.id ? (
+                      <input
+                        type="text"
+                        name="name"
+                        value={editData.name}
+                        onChange={handleChange}
+                      />
+                    ) : (
+                      student.name
+                    )}
+                  </td>
+                  <td>
+                    {editingId === student.id ? (
+                      <input
+                        type="email"
+                        name="email"
+                        value={editData.email}
+                        onChange={handleChange}
+                      />
+                    ) : (
+                      student.email
+                    )}
+                  </td>
+                  <td>
+                    {editingId === student.id ? (
+                      <input
+                        type="text"
+                        name="phone"
+                        value={editData.phone}
+                        onChange={handleChange}
+                      />
+                    ) : (
+                      student.phone
+                    )}
+                  </td>
+                  <td className={styles.actionCell}>
+                    {editingId === student.id ? (
+                      <>
+                        <button
+                          className={styles.editBtn}
+                          onClick={() => saveEdit(student.id)}
+                        >
+                          <FaSave />
+                        </button>
+                        <button className={styles.deleteBtn} onClick={cancelEdit}>
+                          <FaTimes />
+                        </button>
+                      </>
+                    ) : (
+                      <>
+                        <button
+                          className={styles.editBtn}
+                          onClick={() => startEdit(student)}
+                        >
+                          <FaEdit />
+                        </button>
+                        <button
+                          className={styles.deleteBtn}
+                          onClick={() => onDelete(student.id)}
+                        >
+                          <FaTrash />
+                        </button>
+                      </>
+                    )}
+                  </td>
+                </tr>
+              ))
+            )}
+          </tbody>
+        </table>
+      </div>
 
-      {/* Pagination */}
       {totalPages > 1 && (
-        <div className={styles.controls} style={{ marginTop: "20px" }}>
+        <div className={styles.pagination}>
           <button
+            className={styles.arrowBtn}
             onClick={goPrev}
             disabled={currentPage === 1}
-            className={styles.arrowBtn}
           >
             <FaAngleLeft />
           </button>
@@ -173,8 +174,8 @@ export default function StudentsTable({
           {getPageNumbers().map((num) => (
             <button
               key={num}
-              onClick={() => setCurrentPage(num)}
               className={currentPage === num ? styles.activePage : ""}
+              onClick={() => setCurrentPage(num)}
             >
               {num}
             </button>
@@ -183,9 +184,9 @@ export default function StudentsTable({
           {totalPages > getPageNumbers().slice(-1)[0] && <span>...</span>}
 
           <button
+            className={styles.arrowBtn}
             onClick={goNext}
             disabled={currentPage === totalPages}
-            className={styles.arrowBtn}
           >
             <FaAngleRight />
           </button>
@@ -194,4 +195,5 @@ export default function StudentsTable({
     </div>
   );
 }
+
 
