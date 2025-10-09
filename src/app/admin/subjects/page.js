@@ -1,11 +1,21 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  setSubjects,
+  addSubject,
+  updateSubject,
+  deleteSubject,
+  setError,
+} from "../../../redux/slices/SubjectSlices";
 import SubjectsSection from "../../../components/SubjectSection";
 import { apiUrl } from "../../../lib/api";
 
 export default function SubjectsPage() {
-  const [subjects, setSubjects] = useState([]);
+  const dispatch = useDispatch();
+  const subjects = useSelector((state) => state.subjects.subjects);
+
   const [token, setToken] = useState(null);
 
   useEffect(() => {
@@ -23,10 +33,10 @@ export default function SubjectsPage() {
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = await res.json();
-      setSubjects(Array.isArray(data) ? data : data.subjects || []);
+      dispatch(setSubjects(Array.isArray(data) ? data : data.subjects || []));
     } catch (err) {
-      console.error("Failed to fetch subjects:", err);
-      setSubjects([]);
+      dispatch(setError("Failed to fetch subjects"));
+      dispatch(setSubjects([]));
     }
   };
 
@@ -35,7 +45,7 @@ export default function SubjectsPage() {
     try {
       const method = editingSubject ? "PUT" : "POST";
       const endpoint = editingSubject
-        ? `/api/subjects/${subject.id}`
+        ? `/api/subjects/${subject.id || subject._id}`
         : "/api/subjects";
 
       const res = await fetch(apiUrl(endpoint), {
@@ -49,8 +59,14 @@ export default function SubjectsPage() {
 
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Failed to save subject");
-      fetchSubjects();
+
+      if (editingSubject) {
+        dispatch(updateSubject(data));
+      } else {
+        dispatch(addSubject(data));
+      }
     } catch (err) {
+      dispatch(setError(err.message));
       alert(err.message);
     }
   };
@@ -65,8 +81,9 @@ export default function SubjectsPage() {
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Failed to delete subject");
-      fetchSubjects();
+      dispatch(deleteSubject(id));
     } catch (err) {
+      dispatch(setError(err.message));
       alert(err.message);
     }
   };
@@ -79,5 +96,6 @@ export default function SubjectsPage() {
     />
   );
 }
+
 
 
