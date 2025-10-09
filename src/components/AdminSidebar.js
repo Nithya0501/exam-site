@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname,useRouter} from "next/navigation";
 import {
   Home,
   FileText,
@@ -22,6 +22,7 @@ export default function AdminSidebar() {
   const pathname = usePathname();
   const [collapsed, setCollapsed] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+   const router = useRouter();
 
   const links = [
     { href: "/admin/dashboard", label: "Dashboard", icon: <Home size={18} /> },
