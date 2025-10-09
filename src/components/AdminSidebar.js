@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname,useRouter} from "next/navigation";
 import {
   Home,
   FileText,
@@ -12,6 +12,7 @@ import {
   ChevronLeft,
   ChevronRight,
   LogOut,
+  Book,
 
 } from "lucide-react";
 import { useState } from "react";
@@ -21,10 +22,12 @@ export default function AdminSidebar() {
   const pathname = usePathname();
   const [collapsed, setCollapsed] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+   const router = useRouter();
 
   const links = [
     { href: "/admin/dashboard", label: "Dashboard", icon: <Home size={18} /> },
     { href: "/admin/course", label: "Course", icon: <FileText size={18} /> },
+    { href: "/admin/subjects", label: "Subject", icon: <Book size={18} /> },
     { href: "/admin/students", label: "Students", icon: <Users size={18} /> },
     { href: "/admin/results", label: "Results", icon: <Award size={18} /> },
     { href: "/admin/settings", label: "Settings", icon: <Settings size={18} /> },

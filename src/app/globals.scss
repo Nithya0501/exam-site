@@ -1,15 +1,19 @@
-body {
-  font-family: Arial, sans-serif;
-
+:root{
+  --primary-color:#c122dd;
+  --hover-color:#862b96;
+  --text-color:white;
+  --btn-color:#9d40ad;
+  --box-color:#641272;
+  --danger-color:#e63946;
+  --font-family: Arial, sans-serif;
 }
-
 .front-page {
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
   background-color: #f5f5f5;
-  font-family: Arial, sans-serif;
+  font-family: var(--font-family);
 
   .front-hero {
     display: flex;
@@ -48,11 +52,11 @@ body {
           text-decoration: none;
           cursor: pointer;
           transition: all 0.2s;
-          background-color: #c122dd;
-          color: white;
+          background-color: var(--btn-color);
+          color:var(--text-color);
 
           &:hover {
-            background-color: #862b96;
+            background-color: var(--hover-color);
           }
 
         }

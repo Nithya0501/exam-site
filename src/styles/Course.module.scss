@@ -1,111 +1,442 @@
-.coursePage {
+
+$primary-color: #9d40ad;
+$hover-color: #b76dd4;
+$danger-color: #e63946;
+$bg-color: #f9f9f9;
+$text-color: #333;
+$border-color: #e0d1ea;
+$cancel-color: #6c757d;
+$white: #fff;
+
+.courseModule {
   padding: 20px;
+  font-family: "Arial", sans-serif;
+  background-color: $bg-color;
+ 
 
   h1 {
-    font-size: 24px;
-    margin-bottom: 20px;
+    color: $primary-color;
+    font-size: 28px;
+    margin-bottom: 25px;
+    font-weight: bold;
   }
-
-  .controls {
+  .filterSection {
     display: flex;
-    justify-content: space-between;
-    margin-bottom: 20px;
+    justify-content:flex-start;
+    align-items: center;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
 
   .filterWrapper {
-    position: relative;
     display: flex;
     align-items: center;
-  }
+    background: $white;
+    border: 1px solid $border-color;
+    border-radius: 10px;
+    padding: 8px 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 
-  input {
-    padding: 8px 30px 8px 10px;
-    border-radius: 4px;
-    border: 1px solid #ccc;
-  }
-
-  .filterIcon {
-    position: absolute;
-    right: 8px;
-    color: #888;
-    pointer-events: none; 
-  }
-
-    button {
-      padding: 8px 12px;
-      background-color: #9d40ad;
-      color: white;
+    input {
       border: none;
-      border-radius: 4px;
-      cursor: pointer;
+      outline: none;
+      padding: 4px 10px;
+      font-size: 14px;
+      color: $text-color;
+    }
 
-      &:hover {
-        background-color: #641272;
+    .filterIcon {
+      margin-right: 8px;
+      color: $primary-color;
+      font-size: 16px;
+      margin-right: 8px;
+    }
+  }
+
+  .createBtn {
+    color: $white;
+    cursor: pointer;
+    background: $primary-color;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 18px;
+    font-size: .95rem;
+    font-weight: 500;
+    transition: all .3s;
+
+    &:hover {
+      background-color: $hover-color;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
+    }
+  }
+
+  .modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    padding: 10px;
+    animation: fadeIn 0.3s ease forwards;
+  }
+
+  .modalContent {
+    background: $white;
+    padding: 25px;
+    border-radius: 12px;
+    width: 100%;
+    max-width: 500px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    transform: translateY(-20px);
+    opacity: 0;
+    animation: slideDown 0.3s ease forwards;
+
+    h2 {
+      text-align: center;
+      color: $text-color;
+      margin-bottom: 20px;
+      font-size: 22px;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid $border-color;
+      border-radius: 6px;
+      font-size: 14px;
+      transition: border 0.3s;
+
+      &:focus {
+        outline: none;
+        border-color: $primary-color;
+      }
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    .modalActions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+
+      button {
+        padding: 8px 16px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: all 0.3s;
+
+        &:first-child {
+          background-color: $primary-color;
+          color: $white;
+
+          &:hover {
+            background-color: $hover-color;
+            transform: translateY(-1px);
+          }
+        }
+
+        &.cancelBtn {
+          background-color: $cancel-color;
+          color: $white;
+
+          &:hover {
+            background-color: darken($cancel-color, 15%);
+            transform: translateY(-1px);
+          }
+        }
       }
     }
   }
 
-}
-
-.modalOverlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-}
-
-.modalContent {
-  background: white;
-  padding: 20px;
-  border-radius: 8px;
-  width: 400px;
-
-  h2 {
-    font-size: 20px;
-    margin-bottom: 10px;
-  }
-
-  input,
-  textarea {
+  .coursesTable {
     width: 100%;
-    padding: 8px;
-    margin-bottom: 10px;
-    border-radius: 4px;
-    border: 1px solid #ccc;
+    border-collapse: collapse;
+    margin-top: 25px;
+    background: $white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+    th,
+    td {
+      padding: 14px 16px;
+      text-align: left;
+      font-size: 14px;
+      color: $text-color;
+      border-bottom: 1px solid $border-color;
+  
+    }
+
+    th {
+      background-color: lighten($primary-color, 40%);
+      font-weight: bold;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    tbody tr:hover {
+      background-color: lighten($primary-color, 55%);
+    }
+
+    .actionCell {
+      display: flex;
+      gap: 10px;
+
+      button {
+        border: none;
+        background: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 4px;
+        transition: color 0.3s;
+
+        &.editBtn {
+          color: $hover-color;
+
+          &:hover {
+            color: darken($hover-color, 10%);
+          }
+        }
+
+        &.deleteBtn {
+          color: $danger-color;
+
+          &:hover {
+            color: darken($danger-color, 10%);
+          }
+        }
+      }
+    }
+
+    @media (max-width: 600px) {
+      display: block;
+      overflow-x: auto;
+      white-space: nowrap;
+
+      th,
+      td {
+        padding: 12px;
+      }
+    }
   }
 
-  .modalActions {
+  .pagination {
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
+    align-items: center;
+    margin-top: 25px;
     gap: 10px;
 
     button {
-      padding: 6px 12px;
-      border-radius: 4px;
-      border: none;
+      background: $white;
+      border: 1px solid $border-color;
+      color: $text-color;
+      padding: 8px 14px;
+      border-radius: 6px;
       cursor: pointer;
+      font-weight: 500;
+      transition: all 0.3s ease;
 
-      &.cancel {
-        background-color: #ccc;
-
-        &:hover {
-          background-color: #aaa;
-        }
+      &:hover {
+        background: lighten($primary-color, 40%);
+        border-color: $primary-color;
       }
 
-      &.save {
-        background-color: #0070f3;
-        color: white;
-
-        &:hover {
-          background-color: #005bb5;
-        }
+      &.active {
+        background-color: $primary-color;
+        color: $white;
+        border-color: $primary-color;
+        font-weight: bold;
+        transform: scale(1.05);
       }
     }
   }
+
+  @media (max-width: 500px) {
+    .modalContent {
+      width: 100%;
+      padding: 20px;
+    }
+
+    .modalActions {
+      flex-direction: column;
+      gap: 10px;
+
+      button {
+        width: 100%;
+      }
+    }
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes slideDown {
+    from {
+      transform: translateY(-20px);
+      opacity: 0;
+    }
+
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+// .coursePage {
+//   padding: 20px;
+
+//   h1 {
+//     font-size: 24px;
+//     margin-bottom: 20px;
+//   }
+
+//   .controls {
+//     display: flex;
+//     justify-content: space-between;
+//     margin-bottom: 20px;
+
+//   .filterWrapper {
+//     position: relative;
+//     display: flex;
+//     align-items: center;
+//   }
+
+//   input {
+//     padding: 8px 30px 8px 10px;
+//     border-radius: 4px;
+//     border: 1px solid #ccc;
+//   }
+
+//   .filterIcon {
+//     position: absolute;
+//     right: 8px;
+//     color: #888;
+//     pointer-events: none; 
+//   }
+
+//     button {
+//       padding: 8px 12px;
+//       background-color:var(--btn-color);
+//       color:var(--text-color);
+//       border: none;
+//       border-radius: 4px;
+//       cursor: pointer;
+
+//       &:hover {
+//         background-color: var(--hover-color);
+//       }
+//     }
+//   }
+
+// }
+
+
+// @media (max-width: 1024px) {
+//   .coursePage h1 { font-size: 22px; }
+
+//   .coursesTable th, 
+//   .coursesTable td {
+//     padding: 10px;
+//     font-size: 0.9rem;
+//   }
+// }
+
+
+// @media (max-width: 768px) {
+//   .coursePage {
+//     padding: 15px;
+
+//     .controls {
+//       flex-direction: column;
+//       align-items: stretch;
+
+//       button {
+//         width: 100%;
+//         font-size: 0.9rem;
+//       }
+//     }
+//   }
+
+//   .coursesTable th, 
+//   .coursesTable td {
+//     padding: 8px;
+//     font-size: 0.85rem;
+//   }
+// }
+
+
+// @media (max-width: 480px) {
+//   .coursePage {
+//     padding: 10px;
+
+//     h1 {
+//       font-size: 18px;
+//       text-align: center;
+//     }
+
+//     .controls {
+//       flex-direction: column;
+//       gap: 8px;
+
+//       input {
+//         font-size: 0.85rem;
+//         padding: 6px 28px 6px 8px;
+//       }
+
+//       button {
+//         width: 100%;
+//         font-size: 0.85rem;
+//         padding: 6px;
+//       }
+//     }
+//   }
+
+//   .coursesTable {
+//     min-width: 480px; 
+//     th, td {
+//       padding: 6px;
+//       font-size: 0.8rem;
+//     }
+//   }
+// }
