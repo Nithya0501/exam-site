@@ -56,7 +56,7 @@ export default function SubjectsSection({ subjects, onSave, onDelete }) {
       <table className={styles.subjectTable}>
         <thead>
           <tr>
-            <th>Subject Name</th>
+            <th>Subject</th>
             <th>Description</th>
             <th>Actions</th>
           </tr>

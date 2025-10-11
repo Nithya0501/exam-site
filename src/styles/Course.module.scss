@@ -1,7 +1,7 @@
 
 .courseModule {
   padding: 20px;
-  font-family: "Arial", sans-serif;
+  font-family: var(--font-family);
   background-color: var(--bg-color);
  
 
@@ -317,18 +317,18 @@
 
 
       scrollbar-width: thin;
-      scrollbar-color: $primary-color #f0f0f0;
+      scrollbar-color: var(--bg-color);
 
       &::-webkit-scrollbar {
         height: 8px;
       }
 
       &::-webkit-scrollbar-track {
-        background: #f0f0f0;
+        background: var(--bg-color);
       }
 
       &::-webkit-scrollbar-thumb {
-        background: $primary-color;
+        background: var(--bg-color);
         border-radius: 10px;
       }
 

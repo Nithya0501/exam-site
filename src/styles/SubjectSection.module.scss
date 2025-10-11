@@ -182,7 +182,7 @@
   }
 
   tr:hover td {
-    background: rgba(var(--primary-rgb), 0.05);
+    background: rgba(157, 64, 173,0.05);
   }
 
   td {
@@ -225,18 +225,18 @@
 
 
     scrollbar-width: thin;
-    scrollbar-color: $primary-color #f0f0f0;
+    scrollbar-color: var(--bg-color);
 
     &::-webkit-scrollbar {
       height: 8px;
     }
 
     &::-webkit-scrollbar-track {
-      background: #f0f0f0;
+      background: var(--bg-color);
     }
 
     &::-webkit-scrollbar-thumb {
-      background: $primary-color;
+      background: var(--bg-color);
       border-radius: 10px;
     }
 
