@@ -16,7 +16,7 @@ export default function CourseSection({
   const [description, setDescription] = useState("");
   const [filter, setFilter] = useState("");
 
- 
+
   useEffect(() => {
     setCourses(initialCourses);
   }, [initialCourses]);
@@ -77,7 +77,7 @@ export default function CourseSection({
     }
   };
 
- 
+
   const filteredCourses = courses.filter(
     (c) =>
       c.name?.toLowerCase().includes(filter.toLowerCase()) ||
@@ -98,29 +98,31 @@ export default function CourseSection({
             onChange={(e) => setFilter(e.target.value)}
           />
         </div>
-
-        <button className={styles.createBtn} onClick={() => openModal()}>
-          Add Course
-        </button>
+        <div>
+          <button className={styles.createBtn} onClick={() => openModal()}>
+            Add Course
+          </button>
+        </div>
       </div>
 
-     
+
       {isModalOpen && (
         <div className={styles.modalOverlay}>
           <div className={styles.modalContent}>
             <h2>{selectedCourse ? "Edit Course" : "Create Course"}</h2>
-
-            <input
-              type="text"
-              placeholder="Course Name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
-            <textarea
-              placeholder="Course Description"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-            />
+            <div className={styles.CourseSectionModel}>
+              <input
+                type="text"
+                placeholder="Course Name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
+              <textarea
+                placeholder="Course Description"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+              />
+            </div> 
 
             <div className={styles.modalActions}>
               <button onClick={handleSubmit}>
