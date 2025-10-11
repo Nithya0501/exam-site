@@ -11,9 +11,10 @@
     margin-bottom: 25px;
     font-weight: bold;
   }
+
   .filterSection {
     display: flex;
-    justify-content:flex-start;
+    justify-content: flex-start;
     align-items: center;
     margin-bottom: 25px;
     flex-wrap: wrap;
@@ -155,6 +156,93 @@
     }
   }
 
+  @media (max-width: 1024px) {
+    padding: 18px;
+
+    h1 {
+      font-size: 26px;
+    }
+
+    .modalContent {
+      max-width: 450px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    padding: 15px;
+
+    h1 {
+      font-size: 22px;
+      text-align: center;
+    }
+
+    .filterSection {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 15px;
+    }
+
+    .filterWrapper {
+      width: 100%;
+      padding: 0;
+    }
+
+    .createBtn {
+      width: 100%;
+      text-align: center;
+      padding: 5px;
+      font-size: 1rem;
+    }
+
+    .modalContent {
+      width: 90%;
+      padding: 0px 33px 4px 11px
+    }
+  }
+
+  @media (max-width: 480px) {
+    h1 {
+      font-size: 20px;
+    }
+
+    .filterSection {
+      gap: 10px;
+      padding-right: 16px;
+    }
+
+    .filterWrapper {
+      padding-left: 10px;
+
+      .filterIcon {
+        margin-bottom: 5px;
+      }
+
+      input {
+        width: 100%;
+        padding: 6px;
+      }
+    }
+
+    .modalContent {
+      
+      border-radius: 8px;
+    }
+
+    .modalActions {
+      flex-direction: column;
+      gap: 10px;
+
+      button {
+        width: 100%;
+      }
+    }
+    
+      .CourseSectionModel{
+        padding-right: 26px;
+      }
+  }
+
+
   .coursesTable {
     width: 100%;
     border-collapse: collapse;
@@ -220,16 +308,51 @@
       }
     }
 
-    @media (max-width: 600px) {
+    @media (max-width: 768px) {
       display: block;
+      width: 100%;
       overflow-x: auto;
       white-space: nowrap;
+      border-radius: 10px;
+
+
+      scrollbar-width: thin;
+      scrollbar-color: $primary-color #f0f0f0;
+
+      &::-webkit-scrollbar {
+        height: 8px;
+      }
+
+      &::-webkit-scrollbar-track {
+        background: #f0f0f0;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background: $primary-color;
+        border-radius: 10px;
+      }
 
       th,
       td {
-        padding: 12px;
+        padding: 10px 12px;
+        font-size: 13px;
       }
     }
+
+
+    @media (max-width: 480px) {
+
+      th,
+      td {
+        padding: 8px;
+        font-size: 12px;
+      }
+
+      .actionCell {
+        min-width: 80px;
+      }
+    }
+
   }
 
   .pagination {
@@ -280,6 +403,7 @@
     }
   }
 
+
   @keyframes fadeIn {
     from {
       opacity: 0;
@@ -302,133 +426,3 @@
     }
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-// .coursePage {
-//   padding: 20px;
-
-//   h1 {
-//     font-size: 24px;
-//     margin-bottom: 20px;
-//   }
-
-//   .controls {
-//     display: flex;
-//     justify-content: space-between;
-//     margin-bottom: 20px;
-
-//   .filterWrapper {
-//     position: relative;
-//     display: flex;
-//     align-items: center;
-//   }
-
-//   input {
-//     padding: 8px 30px 8px 10px;
-//     border-radius: 4px;
-//     border: 1px solid #ccc;
-//   }
-
-//   .filterIcon {
-//     position: absolute;
-//     right: 8px;
-//     color: #888;
-//     pointer-events: none; 
-//   }
-
-//     button {
-//       padding: 8px 12px;
-//       background-color:var(--btn-color);
-//       color:var(--text-color);
-//       border: none;
-//       border-radius: 4px;
-//       cursor: pointer;
-
-//       &:hover {
-//         background-color: var(--hover-color);
-//       }
-//     }
-//   }
-
-// }
-
-
-// @media (max-width: 1024px) {
-//   .coursePage h1 { font-size: 22px; }
-
-//   .coursesTable th, 
-//   .coursesTable td {
-//     padding: 10px;
-//     font-size: 0.9rem;
-//   }
-// }
-
-
-// @media (max-width: 768px) {
-//   .coursePage {
-//     padding: 15px;
-
-//     .controls {
-//       flex-direction: column;
-//       align-items: stretch;
-
-//       button {
-//         width: 100%;
-//         font-size: 0.9rem;
-//       }
-//     }
-//   }
-
-//   .coursesTable th, 
-//   .coursesTable td {
-//     padding: 8px;
-//     font-size: 0.85rem;
-//   }
-// }
-
-
-// @media (max-width: 480px) {
-//   .coursePage {
-//     padding: 10px;
-
-//     h1 {
-//       font-size: 18px;
-//       text-align: center;
-//     }
-
-//     .controls {
-//       flex-direction: column;
-//       gap: 8px;
-
-//       input {
-//         font-size: 0.85rem;
-//         padding: 6px 28px 6px 8px;
-//       }
-
-//       button {
-//         width: 100%;
-//         font-size: 0.85rem;
-//         padding: 6px;
-//       }
-//     }
-//   }
-
-//   .coursesTable {
-//     min-width: 480px; 
-//     th, td {
-//       padding: 6px;
-//       font-size: 0.8rem;
-//     }
-//   }
-// }
