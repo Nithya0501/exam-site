@@ -1,23 +1,14 @@
-$primary-color: #9d40ad;
-$hover-color: #b76dd4;
-$danger-color: #e63946;
-$bg-color: #f9f9f9;
-$text-color: #333;
-$border-color: #e0d1ea;
-$cancel-color: #6c757d;
-$white: #fff;
-
 .subjectPage {
-  background: $bg-color;
+  background: var(--bg-color);
   min-height: 100vh;
   padding: 30px 40px;
-  font-family: "Inter", sans-serif;
-  color: $text-color;
+  font-family: var(--font-family);
+  color: var(--text-color);
 
   h1 {
     font-size: 1.8rem;
     font-weight: 600;
-    color: $primary-color;
+    color: var(--primary-color);
     margin-bottom: 25px;
     padding-left: 12px;
   }
@@ -32,20 +23,20 @@ $white: #fff;
     .filterWrapper {
       display: flex;
       align-items: center;
-      background: $white;
-      border: 1px solid $border-color;
+      background: var(--white);
+      border: 1px solid var(--border-color);
       border-radius: 10px;
       padding: 8px 12px;
       width: 300px;
       transition: all 0.3s ease;
 
       &:focus-within {
-        border-color: $primary-color;
-        box-shadow: 0 0 0 2px rgba($primary-color, 0.2);
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 2px color-mix(in srgb, var(--primary-color), transparent 80%);
       }
 
       .filterIcon {
-        color: $primary-color;
+        color: var(--primary-color);
         font-size: 16px;
         margin-right: 8px;
       }
@@ -55,14 +46,14 @@ $white: #fff;
         outline: none;
         flex: 1;
         font-size: 0.95rem;
-        color: $text-color;
+        color: var(--text-color);
         background: transparent;
       }
     }
 
     button {
-      background: $primary-color;
-      color: $white;
+      background: var(--primary-color);
+      color: var(--white);
       padding: 10px 18px;
       border: none;
       border-radius: 8px;
@@ -72,7 +63,7 @@ $white: #fff;
       transition: all 0.3s ease;
 
       &:hover {
-        background: $hover-color;
+        background: var(--hover-color);
         transform: translateY(-2px);
       }
 
@@ -86,7 +77,7 @@ $white: #fff;
 .subjectTable {
   width: 100%;
   border-collapse: collapse;
-  background: $white;
+  background: var(--white);
   border-radius: 10px;
   overflow: hidden;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
@@ -94,20 +85,20 @@ $white: #fff;
   th,
   td {
     padding: 12px 15px;
-    border-bottom: 1px solid $border-color;
+    border-bottom: 1px solid var(--border-color);
     text-align: left;
   }
 
   th {
-    background: lighten($primary-color, 40%);
-    color: $primary-color;
+    background: var(--border-color);
+    color: var(--primary-color);
     font-weight: 600;
     cursor: pointer;
     user-select: none;
   }
 
   tr:hover td {
-    background: rgba($primary-color, 0.05);
+    background: rgba(var(--primary-rgb), 0.05);
   }
 
   td {
@@ -129,11 +120,11 @@ $white: #fff;
     font-size: 1.1rem;
 
     &.editBtn {
-      color: $primary-color;
+      color: var(--primary-color);
     }
 
     &.deleteBtn {
-      color: $danger-color;
+      color: var(--danger-color);
     }
 
     &:hover {
@@ -155,9 +146,8 @@ $white: #fff;
   z-index: 999;
 }
 
-
 .modalContainer {
-  background: $white;
+  background: var(--white);
   padding: 25px 30px;
   border-radius: 12px;
   width: 400px;
@@ -165,7 +155,7 @@ $white: #fff;
   animation: fadeIn 0.3s ease;
 
   h2 {
-    color: $primary-color;
+    color: var(--primary-color);
     margin-bottom: 20px;
     font-size: 1.4rem;
   }
@@ -180,7 +170,7 @@ $white: #fff;
   input {
     width: 100%;
     padding: 8px 10px;
-    border: 1px solid $border-color;
+    border: 1px solid var(--border-color);
     border-radius: 8px;
     margin-top: 6px;
     font-size: 0.95rem;
@@ -188,8 +178,8 @@ $white: #fff;
     transition: 0.3s;
 
     &:focus {
-      border-color: $primary-color;
-      box-shadow: 0 0 0 2px rgba($primary-color, 0.2);
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 2px color-mix(in srgb, var(--primary-color), transparent 80%);
     }
   }
 
@@ -209,21 +199,21 @@ $white: #fff;
     }
 
     .cancelBtn {
-      background: $cancel-color;
-      color: $white;
+      background: var(--cancel-color);
+      color: var(--white);
 
       &:hover {
-        background: darken($cancel-color, 6%);
+        background: var(--cancel-dark6);
       }
     }
 
     button[type="submit"],
     button:not(.cancelBtn) {
-      background: $primary-color;
-      color: $white;
+      background: var(--primary-color);
+      color: var(--white);
 
       &:hover {
-        background: $hover-color;
+        background: var(--hover-color);
       }
     }
   }
@@ -239,7 +229,6 @@ $white: #fff;
     transform: translateY(0);
   }
 }
-
 
 @media (max-width: 600px) {
   .subjectPage {

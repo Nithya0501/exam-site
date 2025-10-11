@@ -1,25 +1,20 @@
-$secondary-color: #f5f7fa;
-$text-color: #333;
-$card-bg: #ffffff;
-$shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-
 .dashboardContainer {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
-  background: $secondary-color;
+  min-height: 80vh;
+  background: var(--bg-color);
   padding: 20px;
 }
 
 .card {
-  background: $card-bg;
+  background:var(--white);
   border-radius: 12px;
   padding: 40px;
   max-width: 420px;
   width: 100%;
   text-align: center;
-  box-shadow: $shadow;
+  box-shadow:  0 4px 10px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s ease;
 
   &:hover {
@@ -27,26 +22,26 @@ $shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   }
 
   h1 {
-    color: var(--btn-color);
+    color: var(--primary-color);
     font-size: 28px;
     margin-bottom: 10px;
   }
 
   p {
-    color: $text-color;
+    color: var(--text-color);
     font-size: 16px;
     margin: 8px 0;
   }
 
   .role {
     font-weight: bold;
-    color: var(--btn-color)
+    color: var(--primary-color)
   }
 }
 
 .loading {
   font-size: 20px;
-  color:var(--btn-color);
+  color:var(--primary-color);
   text-align: center;
   margin-top: 50px;
 }

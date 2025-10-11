@@ -61,8 +61,8 @@ export default function SubjectsSection({ subjects, onSave, onDelete }) {
         </thead>
         <tbody>
           {filteredSubjects.length > 0 ? (
-            filteredSubjects.map((s) => (
-              <tr key={s._id || s.id}>
+            filteredSubjects.map((s,index) => (
+                <tr key={`${s._id || s.id}-${index}`}>
                 <td>{s.name}</td>
                 <td>{s.description}</td>
                 <td className={styles.actionCell}>
