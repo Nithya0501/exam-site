@@ -98,7 +98,6 @@ $contrast-hover: #ffffff;
   transition: 0.3s;
 
   &:hover {
-    // background: darken($sidebar-bg, 5%);
     background: var(--btn-color);
   }
 }

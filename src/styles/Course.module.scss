@@ -1,28 +1,20 @@
 
-$primary-color: #9d40ad;
-$hover-color: #b76dd4;
-$danger-color: #e63946;
-$bg-color: #f9f9f9;
-$text-color: #333;
-$border-color: #e0d1ea;
-$cancel-color: #6c757d;
-$white: #fff;
-
 .courseModule {
   padding: 20px;
-  font-family: "Arial", sans-serif;
-  background-color: $bg-color;
+  font-family: var(--font-family);
+  background-color: var(--bg-color);
  
 
   h1 {
-    color: $primary-color;
+    color: var(--primary-color);
     font-size: 28px;
     margin-bottom: 25px;
     font-weight: bold;
   }
+
   .filterSection {
     display: flex;
-    justify-content:flex-start;
+    justify-content: flex-start;
     align-items: center;
     margin-bottom: 25px;
     flex-wrap: wrap;
@@ -32,8 +24,8 @@ $white: #fff;
   .filterWrapper {
     display: flex;
     align-items: center;
-    background: $white;
-    border: 1px solid $border-color;
+    background: var(--white);
+    border: 1px solid var(--border-color);
     border-radius: 10px;
     padding: 8px 12px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
@@ -43,21 +35,21 @@ $white: #fff;
       outline: none;
       padding: 4px 10px;
       font-size: 14px;
-      color: $text-color;
+      color: var(--text-color);
     }
 
     .filterIcon {
       margin-right: 8px;
-      color: $primary-color;
+      color: var(--primary-color);
       font-size: 16px;
       margin-right: 8px;
     }
   }
 
   .createBtn {
-    color: $white;
+    color: var(--white);
     cursor: pointer;
-    background: $primary-color;
+    background: var(--primary-color);
     border: none;
     border-radius: 8px;
     padding: 10px 18px;
@@ -66,7 +58,7 @@ $white: #fff;
     transition: all .3s;
 
     &:hover {
-      background-color: $hover-color;
+      background-color: var(--hover-color);
       transform: translateY(-2px);
       box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
     }
@@ -88,7 +80,7 @@ $white: #fff;
   }
 
   .modalContent {
-    background: $white;
+    background: var(--white);
     padding: 25px;
     border-radius: 12px;
     width: 100%;
@@ -102,7 +94,7 @@ $white: #fff;
 
     h2 {
       text-align: center;
-      color: $text-color;
+      color: var(--text-color);
       margin-bottom: 20px;
       font-size: 22px;
     }
@@ -112,14 +104,14 @@ $white: #fff;
       width: 100%;
       padding: 10px;
       margin-bottom: 15px;
-      border: 1px solid $border-color;
+      border: 1px solid var(--border-color);
       border-radius: 6px;
       font-size: 14px;
       transition: border 0.3s;
 
       &:focus {
         outline: none;
-        border-color: $primary-color;
+        border-color: var(--primary-color);
       }
     }
 
@@ -142,21 +134,21 @@ $white: #fff;
         transition: all 0.3s;
 
         &:first-child {
-          background-color: $primary-color;
-          color: $white;
+          background-color: var(--primary-color);
+          color: var(--white);
 
           &:hover {
-            background-color: $hover-color;
+            background-color: var(--hover-color);
             transform: translateY(-1px);
           }
         }
 
         &.cancelBtn {
-          background-color: $cancel-color;
-          color: $white;
+          background-color: var(--cancel-color);
+          color: var(--white);
 
           &:hover {
-            background-color: darken($cancel-color, 15%);
+            background-color:var(--cancel-color);
             transform: translateY(-1px);
           }
         }
@@ -164,27 +156,115 @@ $white: #fff;
     }
   }
 
+  @media (max-width: 1024px) {
+    padding: 18px;
+
+    h1 {
+      font-size: 26px;
+    }
+
+    .modalContent {
+      max-width: 450px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    padding: 15px;
+
+    h1 {
+      font-size: 22px;
+      text-align: center;
+    }
+
+    .filterSection {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 15px;
+    }
+
+    .filterWrapper {
+      width: 100%;
+      padding: 0;
+    }
+
+    .createBtn {
+      width: 100%;
+      text-align: center;
+      padding: 5px;
+      font-size: 1rem;
+    }
+
+    .modalContent {
+      width: 90%;
+      padding: 0px 33px 4px 11px
+    }
+  }
+
+  @media (max-width: 480px) {
+    h1 {
+      font-size: 20px;
+    }
+
+    .filterSection {
+      gap: 10px;
+      padding-right: 16px;
+    }
+
+    .filterWrapper {
+      padding-left: 10px;
+
+      .filterIcon {
+        margin-bottom: 5px;
+      }
+
+      input {
+        width: 100%;
+        padding: 6px;
+      }
+    }
+
+    .modalContent {
+      
+      border-radius: 8px;
+    }
+
+    .modalActions {
+      flex-direction: column;
+      gap: 10px;
+
+      button {
+        width: 100%;
+      }
+    }
+    
+      .CourseSectionModel{
+        padding-right: 26px;
+      }
+  }
+
+
   .coursesTable {
     width: 100%;
     border-collapse: collapse;
     margin-top: 25px;
-    background: $white;
+    background: var(--white);
     border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 
     th,
     td {
       padding: 14px 16px;
       text-align: left;
       font-size: 14px;
-      color: $text-color;
-      border-bottom: 1px solid $border-color;
+     
+      border-bottom: 1px solid var(--border-color);
   
     }
 
     th {
-      background-color: lighten($primary-color, 40%);
+       color: var(--primary-color);
+    background:var(--border-color);
       font-weight: bold;
     }
 
@@ -193,7 +273,7 @@ $white: #fff;
     }
 
     tbody tr:hover {
-      background-color: lighten($primary-color, 55%);
+      background: rgba(var(--primary-rgb), 0.05);
     }
 
     .actionCell {
@@ -211,33 +291,68 @@ $white: #fff;
         transition: color 0.3s;
 
         &.editBtn {
-          color: $hover-color;
+          color: var(--hover-color);
 
           &:hover {
-            color: darken($hover-color, 10%);
+            color:var(--hover-color);
           }
         }
 
         &.deleteBtn {
-          color: $danger-color;
+          color: var(--danger-color);
 
           &:hover {
-            color: darken($danger-color, 10%);
+            color: var(--danger-color);
           }
         }
       }
     }
 
-    @media (max-width: 600px) {
+    @media (max-width: 768px) {
       display: block;
+      width: 100%;
       overflow-x: auto;
       white-space: nowrap;
+      border-radius: 10px;
+
+
+      scrollbar-width: thin;
+      scrollbar-color: var(--bg-color);
+
+      &::-webkit-scrollbar {
+        height: 8px;
+      }
+
+      &::-webkit-scrollbar-track {
+        background: var(--bg-color);
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background: var(--bg-color);
+        border-radius: 10px;
+      }
 
       th,
       td {
-        padding: 12px;
+        padding: 10px 12px;
+        font-size: 13px;
       }
     }
+
+
+    @media (max-width: 480px) {
+
+      th,
+      td {
+        padding: 8px;
+        font-size: 12px;
+      }
+
+      .actionCell {
+        min-width: 80px;
+      }
+    }
+
   }
 
   .pagination {
@@ -248,9 +363,9 @@ $white: #fff;
     gap: 10px;
 
     button {
-      background: $white;
-      border: 1px solid $border-color;
-      color: $text-color;
+      background: var(--white);
+      border: 1px solid var(--border-color);
+      color: var(--text-color);
       padding: 8px 14px;
       border-radius: 6px;
       cursor: pointer;
@@ -258,14 +373,14 @@ $white: #fff;
       transition: all 0.3s ease;
 
       &:hover {
-        background: lighten($primary-color, 40%);
-        border-color: $primary-color;
+        background:var(--primary-color);
+        border-color: var(--primary-color);
       }
 
       &.active {
-        background-color: $primary-color;
-        color: $white;
-        border-color: $primary-color;
+        background-color: var(--primary-color);
+        color: var(--white);
+        border-color:var(--primary-color);
         font-weight: bold;
         transform: scale(1.05);
       }
@@ -287,6 +402,7 @@ $white: #fff;
       }
     }
   }
+
 
   @keyframes fadeIn {
     from {
@@ -310,133 +426,3 @@ $white: #fff;
     }
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-// .coursePage {
-//   padding: 20px;
-
-//   h1 {
-//     font-size: 24px;
-//     margin-bottom: 20px;
-//   }
-
-//   .controls {
-//     display: flex;
-//     justify-content: space-between;
-//     margin-bottom: 20px;
-
-//   .filterWrapper {
-//     position: relative;
-//     display: flex;
-//     align-items: center;
-//   }
-
-//   input {
-//     padding: 8px 30px 8px 10px;
-//     border-radius: 4px;
-//     border: 1px solid #ccc;
-//   }
-
-//   .filterIcon {
-//     position: absolute;
-//     right: 8px;
-//     color: #888;
-//     pointer-events: none; 
-//   }
-
-//     button {
-//       padding: 8px 12px;
-//       background-color:var(--btn-color);
-//       color:var(--text-color);
-//       border: none;
-//       border-radius: 4px;
-//       cursor: pointer;
-
-//       &:hover {
-//         background-color: var(--hover-color);
-//       }
-//     }
-//   }
-
-// }
-
-
-// @media (max-width: 1024px) {
-//   .coursePage h1 { font-size: 22px; }
-
-//   .coursesTable th, 
-//   .coursesTable td {
-//     padding: 10px;
-//     font-size: 0.9rem;
-//   }
-// }
-
-
-// @media (max-width: 768px) {
-//   .coursePage {
-//     padding: 15px;
-
-//     .controls {
-//       flex-direction: column;
-//       align-items: stretch;
-
-//       button {
-//         width: 100%;
-//         font-size: 0.9rem;
-//       }
-//     }
-//   }
-
-//   .coursesTable th, 
-//   .coursesTable td {
-//     padding: 8px;
-//     font-size: 0.85rem;
-//   }
-// }
-
-
-// @media (max-width: 480px) {
-//   .coursePage {
-//     padding: 10px;
-
-//     h1 {
-//       font-size: 18px;
-//       text-align: center;
-//     }
-
-//     .controls {
-//       flex-direction: column;
-//       gap: 8px;
-
-//       input {
-//         font-size: 0.85rem;
-//         padding: 6px 28px 6px 8px;
-//       }
-
-//       button {
-//         width: 100%;
-//         font-size: 0.85rem;
-//         padding: 6px;
-//       }
-//     }
-//   }
-
-//   .coursesTable {
-//     min-width: 480px; 
-//     th, td {
-//       padding: 6px;
-//       font-size: 0.8rem;
-//     }
-//   }
-// }

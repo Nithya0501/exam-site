@@ -48,21 +48,23 @@ export default function SubjectsSection({ subjects, onSave, onDelete }) {
             onChange={(e) => setFilter(e.target.value)}
           />
         </div>
-        <button onClick={() => openModal()}>Create Subject</button>
+        <div>
+          <button onClick={() => openModal()}>Create Subject</button>
+        </div>
       </div>
 
       <table className={styles.subjectTable}>
         <thead>
           <tr>
-            <th>Subject Name</th>
+            <th>Subject</th>
             <th>Description</th>
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
           {filteredSubjects.length > 0 ? (
-            filteredSubjects.map((s) => (
-              <tr key={s._id || s.id}>
+            filteredSubjects.map((s,index) => (
+                <tr key={`${s._id || s.id}-${index}`}>
                 <td>{s.name}</td>
                 <td>{s.description}</td>
                 <td className={styles.actionCell}>
@@ -86,12 +88,12 @@ export default function SubjectsSection({ subjects, onSave, onDelete }) {
           <div className={styles.modalContainer}>
             <h2>{editingSubject ? "Edit Subject" : "Create Subject"}</h2>
             <form onSubmit={handleSubmit}>
-              <label>Subject Name</label>
-              <input type="text" value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} />
+              <div className={styles.subjectModel}>
+                <input type="text" placeholder="Subject Name" value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} />
 
-              <label>Description</label>
-              <input type="text" value={formData.description} onChange={(e) => setFormData({ ...formData, description: e.target.value })} />
 
+                <input type="text" placeholder="Description" value={formData.description} onChange={(e) => setFormData({ ...formData, description: e.target.value })} />
+              </div>
               <div className={styles.modalActions}>
                 <button type="submit">{editingSubject ? "Update" : "Submit"}</button>
                 <button type="button" className={styles.cancelBtn} onClick={() => setIsModalOpen(false)}>Cancel</button>

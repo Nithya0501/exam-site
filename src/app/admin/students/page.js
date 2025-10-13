@@ -56,9 +56,10 @@ export default function StudentsPage() {
     return 0;
   });
 
-  const totalPages = Math.ceil(sorted.length / studentsPerPage);
-  const indexOfLast = currentPage * studentsPerPage;
-  const indexOfFirst = indexOfLast - studentsPerPage;
+ 
+  const totalPages = Math.ceil(sorted.length / 5); 
+  const indexOfLast = currentPage * 5;
+  const indexOfFirst = indexOfLast - 5;
   const currentStudents = sorted.slice(indexOfFirst, indexOfLast);
 
   const goPrev = () =>
@@ -68,10 +69,9 @@ export default function StudentsPage() {
 
   const getPageNumbers = () => {
     const pages = [];
-    let start = Math.max(1, currentPage - 2);
-    let end = Math.min(totalPages, start + 4);
-    if (end - start + 1 < 5) start = Math.max(1, end - 4);
-    for (let i = start; i <= end; i++) pages.push(i);
+    for (let i = 1; i <= totalPages; i++) {
+      pages.push(i);
+    }
     return pages;
   };
 

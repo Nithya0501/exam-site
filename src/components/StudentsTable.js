@@ -63,10 +63,9 @@ export default function StudentsTable({
             onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
-
-        <button onClick={toggleSort}>
-          <FaFilter /> Sort
-        </button>
+          <button onClick={toggleSort}>
+            <FaFilter /> Sort
+          </button>
       </div>
       <div className="studentTableContainer">
         <table className={styles.studentTable}>
