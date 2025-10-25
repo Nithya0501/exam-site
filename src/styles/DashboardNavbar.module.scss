@@ -1,0 +1,27 @@
+import { Bell } from "lucide-react";
+import Image from "next/image";
+import styles from "../styles/Navbar.module.scss";
+import userLogo from "../assets/userLogo.png"; // adjust path as needed
+
+export default function Navbar() {
+  return (
+    <nav className={styles.navbar}>
+      <div className={styles.searchBox}>
+        <input type="text" placeholder="Search..." />
+      </div>
+
+      <div className={styles.iconsSection}>
+        <Bell size={24} className={styles.bellIcon} />
+        <div className={styles.userSection}>
+          <Image
+            src={userLogo}
+            alt="User"
+            className={styles.userImg}
+            width={40}
+            height={40}
+          />
+        </div>
+      </div>
+    </nav>
+  );
+}
