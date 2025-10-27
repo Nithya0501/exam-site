@@ -1,27 +1,93 @@
-import { Bell } from "lucide-react";
-import Image from "next/image";
-import styles from "../styles/Navbar.module.scss";
-import userLogo from "../assets/userLogo.png"; // adjust path as needed
-
-export default function Navbar() {
-  return (
-    <nav className={styles.navbar}>
-      <div className={styles.searchBox}>
-        <input type="text" placeholder="Search..." />
-      </div>
-
-      <div className={styles.iconsSection}>
-        <Bell size={24} className={styles.bellIcon} />
-        <div className={styles.userSection}>
-          <Image
-            src={userLogo}
-            alt="User"
-            className={styles.userImg}
-            width={40}
-            height={40}
-          />
-        </div>
-      </div>
-    </nav>
-  );
+.navbar {
+  display: flex;
+  justify-content:end;
+  align-items: center;
+  padding: 10px 20px;
+  padding-left: 20px;
 }
+
+.searchBox {
+  flex: 1;
+  max-width: 300px;
+ 
+
+  input {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    outline: none;
+    transition: border-color 0.2s ease;
+
+    &:focus {
+      border-color: #3b82f6;
+    }
+  }
+}
+
+.iconsSection {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.bellWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bellIcon {
+  color: #3b82f6;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  margin-left: 30px;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+}
+
+.badge {
+  position: absolute;
+  top: -5px;
+  right: -6px;
+  background: #ef4444;
+  color: white;
+  font-size: 10px;
+  font-weight: 600;
+  border-radius: 50%;
+  padding: 2px 6px;
+  line-height: 1;
+  min-width: 16px;
+  text-align: center;
+}
+
+.userSection {
+  display: flex;
+  align-items: center;
+}
+
+.userImg {
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid #e5e7eb;
+  transition: transform 0.2s ease;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+}
+
+@media (max-width: 600px) {
+  .navbar {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .searchBox {
+    width: 100%;
+  }
+}
+
