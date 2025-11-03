@@ -108,6 +108,64 @@
     }
   }
 
+  @media (max-width: 1024px) {
+    .filterSection {
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .filterWrapper {
+      width: 280px;
+    }
+
+    .createBtn {
+      padding: 9px 16px;
+      font-size: 0.9rem;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .filterSection {
+      flex-direction: column;
+      align-items: stretch;
+      justify-content: center;
+      gap: 1rem;
+    }
+
+    .filterWrapper {
+      width: 100%;
+      max-width: 400px;
+      margin: 0 auto;
+    }
+
+    .createBtn {
+      width: 100%;
+      max-width: 200px;
+      margin: 0 auto;
+      text-align: center;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .filterSection {
+      flex-direction: column;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .filterWrapper {
+      width: 100%;
+      max-width: 100%;
+      padding: 6px 10px;
+    }
+
+    .createBtn {
+      width: 100%;
+      font-size: 0.85rem;
+      padding: 8px 14px;
+    }
+  }
+
   .cardsContainer {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -221,9 +279,6 @@
     }
   }
 
-  /* 🌐 RESPONSIVE BREAKPOINTS */
-
-  /* Large screens (desktops) */
   @media (min-width: 1200px) {
     .cardsContainer {
       grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -235,7 +290,7 @@
     }
   }
 
-  /* Medium screens (tablets) */
+
   @media (max-width: 1024px) {
     .cardsContainer {
       grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
@@ -252,11 +307,10 @@
     }
   }
 
-  /* Small screens (mobile) */
   @media (max-width: 768px) {
     .cardsContainer {
       grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-      gap: 1rem;
+      gap: 1.5rem;
     }
 
     .courseCard {
@@ -274,11 +328,10 @@
     }
   }
 
-  /* Extra small screens (mobile portrait) */
   @media (max-width: 480px) {
     .cardsContainer {
       grid-template-columns: 1fr;
-      gap: 1rem;
+      gap: 1.5rem;
     }
 
     .courseCard {
@@ -287,7 +340,7 @@
     }
 
     .courseCard img {
-      height: 110px;
+      height: 160px;
     }
 
     .courseLevel {
@@ -353,9 +406,25 @@
       justify-content: flex-end;
       gap: 0.5rem;
     }
+
+    .imageChoose {
+      border: 1px solid #ccc;
+      padding: 0.5rem;
+      cursor: pointer;
+      transition: border-color 0.2s ease;
+
+      &:hover {
+        border-color: var(--primary-color);
+      }
+    }
+
+    .imagePreview {
+      width: 120px;
+      margin-top: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
   }
-
-
 
   @media (max-width: 1024px) {
     .cardsContainer {
@@ -382,7 +451,7 @@
   @media (max-width: 768px) {
     .cardsContainer {
       grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-      gap: 0.8rem;
+      gap: 2.5rem;
     }
 
     .modalCard {
@@ -403,7 +472,7 @@
   @media (max-width: 480px) {
     .cardsContainer {
       grid-template-columns: 1fr;
-      gap: 0.5rem;
+      gap: 1.5rem;
     }
 
     .modalCard {
@@ -423,7 +492,7 @@
     }
 
     .courseCard img {
-      height: 100px;
+      height: 160px;
     }
   }
 

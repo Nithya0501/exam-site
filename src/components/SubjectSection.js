@@ -1,107 +1,158 @@
 "use client";
 
-import { useState } from "react";
-import { FaSearch, FaEdit, FaTrash } from "react-icons/fa";
+import { useState, useEffect } from "react";
+import SubjectForm from "./SubjectForm";
+import { FaTrash, FaEdit, FaSearch, FaUsers } from "react-icons/fa";
 import styles from "../styles/SubjectSection.module.scss";
 
-export default function SubjectsSection({ subjects, onSave, onDelete }) {
-  const [filter, setFilter] = useState("");
-  const [isModalOpen, setIsModalOpen] = useState(false);
+export default function SubjectSection({
+  initialSubjects = [],
+  onSaveSubject,
+  onDeleteSubject,
+}) {
+  const [subjects, setSubjects] = useState(initialSubjects || []);
+  const [isFormOpen, setIsFormOpen] = useState(false);
   const [editingSubject, setEditingSubject] = useState(null);
-  const [formData, setFormData] = useState({ name: "", description: "" });
+  const [filter, setFilter] = useState("");
+  useEffect(() => {
+    if (subjects.length === 0 && initialSubjects.length > 0) {
+      setSubjects(initialSubjects);
+    }
+  }, [initialSubjects]);
 
-  const filteredSubjects = subjects.filter(
-    (s) =>
-      s.name?.toLowerCase().includes(filter.toLowerCase()) ||
-      s.description?.toLowerCase().includes(filter.toLowerCase())
-  );
 
-  const openModal = (subject = null) => {
-    setEditingSubject(subject);
-    setFormData({
-      name: subject?.name || "",
-      description: subject?.description || "",
-    });
-    setIsModalOpen(true);
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!formData.name || !formData.description) return alert("Both fields are required!");
-    onSave({ id: editingSubject?._id || editingSubject?.id, ...formData }, editingSubject);
-    setIsModalOpen(false);
+  const openModal = () => {
     setEditingSubject(null);
-    setFormData({ name: "", description: "" });
+    setIsFormOpen(true);
   };
+
+  const handleEdit = (subject) => {
+    setEditingSubject(subject);
+    setIsFormOpen(true);
+  };
+
+  const handleCancel = () => {
+    setEditingSubject(null);
+    setIsFormOpen(false);
+  };
+
+  const handleSave = async (subject) => {
+    const saved = await onSaveSubject(subject, editingSubject);
+    if (saved) {
+      setSubjects((prev) => {
+        const exists = prev.some((s) => s._id === saved._id);
+        if (exists) {
+
+          return prev.map((s) => (s._id === saved._id ? saved : s));
+        } else {
+
+          return [...prev, saved];
+        }
+      });
+    }
+    setIsFormOpen(false);
+    setEditingSubject(null);
+  };
+
+
+
+  const handleDelete = async (subject) => {
+    const confirmed = window.confirm("Are you sure you want to delete this subject?");
+    if (!confirmed) return;
+
+    await onDeleteSubject(subject._id || subject.id);
+    setSubjects((prev) => prev.filter((s) => s._id !== (subject._id || subject.id)));
+  };
+
+  const colorMap = {
+    Beginner: "beginner",
+    Intermediate: "intermediate",
+    Advanced: "advanced",
+  };
+
+  const filteredSubjects = subjects
+    .filter((s) => s && s.name)
+    .filter((s) => s.name.toLowerCase().includes(filter.toLowerCase()));
 
   return (
-    <div className={styles.subjectPage}>
-      <h1>Subjects</h1>
+    <div className={styles.subjectModule}>
+      <div className={styles.subjectHeading}>
+        <div>
+          <h1>Subjects Management</h1>
+          <p>View, add, and organize all available subjects.</p>
+        </div>
+        <div>
+          <button className={styles.createBtn} onClick={openModal}>
+            + Add Subject
+          </button>
+        </div>
+      </div>
 
-      <div className={styles.controls}>
+      <div className={styles.filterSection}>
         <div className={styles.filterWrapper}>
           <FaSearch className={styles.filterIcon} />
           <input
             type="text"
-            placeholder="Filter subjects..."
+            placeholder="Search subjects..."
             value={filter}
             onChange={(e) => setFilter(e.target.value)}
           />
         </div>
-        <div>
-          <button onClick={() => openModal()}>Create Subject</button>
-        </div>
       </div>
 
-      <table className={styles.subjectTable}>
-        <thead>
-          <tr>
-            <th>Subject</th>
-            <th>Description</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {filteredSubjects.length > 0 ? (
-            filteredSubjects.map((s,index) => (
-                <tr key={`${s._id || s.id}-${index}`}>
-                <td>{s.name}</td>
-                <td>{s.description}</td>
-                <td className={styles.actionCell}>
-                  <button className={styles.editBtn} onClick={() => openModal(s)}><FaEdit /></button>
-                  <button className={styles.deleteBtn} onClick={() => onDelete(s._id || s.id)}><FaTrash /></button>
-                </td>
-              </tr>
-            ))
-          ) : (
-            <tr>
-              <td colSpan={3} style={{ textAlign: "center", padding: "12px" }}>
-                No subjects found.
-              </td>
-            </tr>
-          )}
-        </tbody>
-      </table>
+      <div className={styles.cardsContainer}>
+        {filteredSubjects.length > 0 ? (
+          Array.from(
+            new Map(filteredSubjects.map((s) => [s._id || s.id, s])).values()
+          ).map((subject) => (
+            <div key={subject._id || subject.id} className={styles.subjectCard}>
+              {subject.image && (<img src={subject.image} alt={subject.name} />)}
+              <h3>{subject.name}</h3>
+              <p>{subject.author}</p>
+              <div className={styles.subjectStudent}>
+                <p>
+                  <FaUsers /> {subject.students} Students
+                </p>
+                <p
+                  className={`${styles.subjectLevel} ${styles[colorMap[subject.level]]}`}
+                >
+                  {subject.level}
+                </p>
+              </div>
+              <div className={styles.subjectUpdate}>
+                <div>
+                  <p>{subject.duration} weeks</p>
+                </div>
+                <div className={styles.cardActions}>
+                  <button onClick={() => handleEdit(subject)}>
+                    <FaEdit />
+                  </button>
+                  <button onClick={() => handleDelete(subject)}>
+                    <FaTrash />
+                  </button>
+                </div>
+              </div>
+            </div>
+          ))
+        ) : (
+          <p>No subjects found.</p>
+        )}
+      </div>
 
-      {isModalOpen && (
+      {isFormOpen && (
         <div className={styles.modalOverlay}>
-          <div className={styles.modalContainer}>
-            <h2>{editingSubject ? "Edit Subject" : "Create Subject"}</h2>
-            <form onSubmit={handleSubmit}>
-              <div className={styles.subjectModel}>
-                <input type="text" placeholder="Subject Name" value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} />
-
-
-                <input type="text" placeholder="Description" value={formData.description} onChange={(e) => setFormData({ ...formData, description: e.target.value })} />
-              </div>
-              <div className={styles.modalActions}>
-                <button type="submit">{editingSubject ? "Update" : "Submit"}</button>
-                <button type="button" className={styles.cancelBtn} onClick={() => setIsModalOpen(false)}>Cancel</button>
-              </div>
-            </form>
+          <div className={styles.modalCard}>
+            <SubjectForm
+              onSave={handleSave}
+              editingSubject={editingSubject}
+              onCancel={handleCancel}
+            />
           </div>
         </div>
       )}
     </div>
   );
 }
+
+
+

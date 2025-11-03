@@ -1,5 +1,4 @@
-export const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "https://exam-site-backend.vercel.app";
-
+export const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "https://exam-site-backend-theta.vercel.app";
 5000
 export function apiUrl(path) {
   if (!path) return API_BASE_URL;

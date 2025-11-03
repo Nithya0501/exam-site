@@ -1,11 +1,12 @@
 "use client";
-import React, { useState, useEffect } from "react";
-import styles from "../styles/Course.module.scss";
+import React, { useEffect, useState } from "react";
+import styles from "../styles/SubjectSection.module.scss";
+
 const levels = ["Beginner", "Intermediate", "Advanced"];
 
-const CourseForm = ({ onSave, editingCourse, onCancel }) => {
+const SubjectForm = ({ onSave, editingSubject, onCancel }) => {
   const [form, setForm] = useState({
-    title: "",
+    name: "",
     author: "",
     students: "",
     duration: "",
@@ -16,22 +17,21 @@ const CourseForm = ({ onSave, editingCourse, onCancel }) => {
   const [file, setFile] = useState(null);
   const [preview, setPreview] = useState(null);
 
-
   useEffect(() => {
-    if (editingCourse) {
+    if (editingSubject) {
       setForm({
-        title: editingCourse.title || "",
-        author: editingCourse.author || "",
-        students: editingCourse.students || "",
-        duration: editingCourse.duration || "",
-        level: editingCourse.level || "Beginner",
-        image: editingCourse.image || "",
+        name: editingSubject.name || "",
+        author: editingSubject.author || "",
+        students: editingSubject.students || "",
+        duration: editingSubject.duration || "",
+        level: editingSubject.level || "Beginner",
+        image: editingSubject.image || "",
       });
-      if (editingCourse.image) setPreview(editingCourse.image);
+      if (editingSubject.image) setPreview(editingSubject.image);
     } else {
 
       setForm({
-        title: "",
+        name: "",
         author: "",
         students: "",
         duration: "",
@@ -40,7 +40,7 @@ const CourseForm = ({ onSave, editingCourse, onCancel }) => {
       });
       setPreview(null);
     }
-  }, [editingCourse]);
+  }, [editingSubject]);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -63,7 +63,7 @@ const CourseForm = ({ onSave, editingCourse, onCancel }) => {
     await onSave({ ...form, image: file || form.image });
     onCancel();
     setForm({
-      title: "",
+      name: "",
       author: "",
       students: "",
       duration: "",
@@ -74,24 +74,26 @@ const CourseForm = ({ onSave, editingCourse, onCancel }) => {
     setPreview(null);
   };
 
+
   return (
     <form onSubmit={handleSubmit} className={styles.form}>
-      <input name="title" placeholder="Title" value={form.title} onChange={handleChange} required />
+      <input name="name" placeholder="Name" value={form.name} onChange={handleChange} required />
       <input name="author" placeholder="Author" value={form.author} onChange={handleChange} required />
       <input name="students" placeholder="Students" type="number" value={form.students} onChange={handleChange} />
       <input name="duration" placeholder="Duration (weeks)" type="number" value={form.duration} onChange={handleChange} />
       <select name="level" value={form.level} onChange={handleChange}>
-        {levels.map((lvl) => <option key={lvl}>{lvl}</option>)}
+        {levels.map((lvl) => (<option key={lvl}>{lvl}</option>))}
       </select>
       <input type="file" accept="image/*" onChange={handleFileChange} className={styles.imageChoose} />
       {preview && (
         <img src={preview} alt="Preview" className={styles.imagePreview} />
       )}
       <div className={styles.formbuttons}>
-        <button type="submit" className={styles.submitBtn}>{editingCourse ? "Update" : "Submit"}</button>
+        <button type="submit" className={styles.submitBtn}>{editingSubject ? "Update" : "Submit"} </button>
         <button type="button" className={styles.cancelBtn} onClick={() => onCancel()}>Cancel</button>
       </div>
     </form>
   );
 };
-export default CourseForm;
+
+export default SubjectForm;
