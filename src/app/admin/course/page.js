@@ -44,28 +44,33 @@ export default function CoursesPage() {
     fetchCourses();
   }, [token, dispatch]);
 
-  
-  const handleSaveCourse = async (courseData) => {
+
+  const handleSaveCourse = async (courseData, editingCourse) => {
     try {
-      const isEditing = !!courseData._id;
+      const isEditing = !!editingCourse;
       const endpoint = isEditing
-        ? `/api/courses/${courseData._id}`
+        ? `/api/courses/${editingCourse._id}`
         : "/api/courses";
       const method = isEditing ? "PUT" : "POST";
 
+      const formData = new FormData();
+
+      Object.entries(courseData).forEach(([key, value]) => {
+        if (value !== undefined && value !== null) {
+          formData.append(key, value);
+        }
+      });
+
       const res = await fetch(apiUrl(endpoint), {
         method,
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(courseData),
+        headers: { Authorization: `Bearer ${token}` },
+        body: formData,
       });
 
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Failed to save course");
 
-      
+
       if (isEditing) {
         dispatch(updateCourse(data));
       } else {

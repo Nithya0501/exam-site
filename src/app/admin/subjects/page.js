@@ -44,21 +44,26 @@ export default function SubjectsPage() {
     fetchSubjects();
   }, [token, dispatch]);
 
-  const handleSaveSubject = async (subjectData) => {
+  const handleSaveSubject = async (subjectData, editingSubject) => {
     try {
-      const isEditing = !!subjectData._id;
+      const isEditing = !!editingSubject;
       const endpoint = isEditing
-        ? `/api/subjects/${subjectData._id}`
+        ? `/api/subjects/${editingSubject._id}`
         : "/api/subjects";
       const method = isEditing ? "PUT" : "POST";
 
+      const formData = new FormData();
+
+      Object.entries(subjectData).forEach(([key, value]) => {
+        if (value !== undefined && value !== null) {
+          formData.append(key, value);
+        }
+      });
+
       const res = await fetch(apiUrl(endpoint), {
         method,
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(subjectData),
+        headers: { Authorization: `Bearer ${token}` },
+        body: formData,
       });
 
       const data = await res.json();
@@ -76,6 +81,8 @@ export default function SubjectsPage() {
       return null;
     }
   };
+
+
 
   const handleDeleteSubject = async (id) => {
     try {

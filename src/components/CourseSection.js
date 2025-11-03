@@ -16,7 +16,9 @@ export default function CourseSection({
   const [filter, setFilter] = useState("");
 
   useEffect(() => {
-    setCourses(initialCourses);
+    if (courses.length === 0 && initialCourses.length > 0) {
+      setCourses(initialCourses);
+    }
   }, [initialCourses]);
 
   const openModal = () => {
@@ -34,20 +36,22 @@ export default function CourseSection({
     setIsFormOpen(false);
   };
 
+
+
   const handleSave = async (course) => {
-    if (editingCourse) {
-      
-      const updated = await onSaveCourse(course, editingCourse);
+    const saved = await onSaveCourse(course, editingCourse);
+    if (saved) {
+      setCourses((prev) => {
+        const exists = prev.some((c) => c._id === saved._id);
+        if (exists) {
 
-      setCourses((prev) =>
-        prev.map((c) => (c._id === updated._id || c.id === updated.id ? updated : c))
-      );
-    } else {
-     
-      const saved = await onSaveCourse(course);
-      setCourses((prev) => [...prev, saved]);
+          return prev.map((c) => (c._id === saved._id ? saved : c));
+        } else {
+
+          return [...prev, saved];
+        }
+      });
     }
-
     setIsFormOpen(false);
     setEditingCourse(null);
   };
@@ -67,7 +71,7 @@ export default function CourseSection({
   };
 
   const filteredCourses = courses
-    .filter((c) => c && c.title) 
+    .filter((c) => c && c.title)
     .filter((c) => c.title.toLowerCase().includes(filter.toLowerCase()));
 
   return (
@@ -98,7 +102,7 @@ export default function CourseSection({
 
       <div className={styles.cardsContainer}>
         {filteredCourses.length > 0 ? (
-          
+
           Array.from(
             new Map(filteredCourses.map((c) => [c._id || c.id, c])).values()
           ).map((course) => (

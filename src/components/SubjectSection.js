@@ -14,10 +14,12 @@ export default function SubjectSection({
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [editingSubject, setEditingSubject] = useState(null);
   const [filter, setFilter] = useState("");
-
   useEffect(() => {
-    setSubjects(initialSubjects || []);
+    if (subjects.length === 0 && initialSubjects.length > 0) {
+      setSubjects(initialSubjects);
+    }
   }, [initialSubjects]);
+
 
   const openModal = () => {
     setEditingSubject(null);
@@ -35,19 +37,24 @@ export default function SubjectSection({
   };
 
   const handleSave = async (subject) => {
-    if (editingSubject) {
-      const updated = await onSaveSubject(subject, editingSubject);
-      setSubjects((prev) =>
-        prev.map((s) => (s._id === updated._id || s.id === updated.id ? updated : s))
-      );
-    } else {
-      const saved = await onSaveSubject(subject);
-      setSubjects((prev) => [...prev, saved]);
-    }
+    const saved = await onSaveSubject(subject, editingSubject);
+    if (saved) {
+      setSubjects((prev) => {
+        const exists = prev.some((s) => s._id === saved._id);
+        if (exists) {
 
+          return prev.map((s) => (s._id === saved._id ? saved : s));
+        } else {
+
+          return [...prev, saved];
+        }
+      });
+    }
     setIsFormOpen(false);
     setEditingSubject(null);
   };
+
+
 
   const handleDelete = async (subject) => {
     const confirmed = window.confirm("Are you sure you want to delete this subject?");
@@ -99,7 +106,7 @@ export default function SubjectSection({
             new Map(filteredSubjects.map((s) => [s._id || s.id, s])).values()
           ).map((subject) => (
             <div key={subject._id || subject.id} className={styles.subjectCard}>
-              {subject.image && <img src={subject.image} alt={subject.name} />}
+              {subject.image && (<img src={subject.image} alt={subject.name} />)}
               <h3>{subject.name}</h3>
               <p>{subject.author}</p>
               <div className={styles.subjectStudent}>
@@ -137,7 +144,7 @@ export default function SubjectSection({
           <div className={styles.modalCard}>
             <SubjectForm
               onSave={handleSave}
-              editSubject={editingSubject}
+              editingSubject={editingSubject}
               onCancel={handleCancel}
             />
           </div>
