@@ -2,8 +2,10 @@
 
 import { useState, useEffect } from "react";
 import SubjectForm from "./SubjectForm";
+import { useRouter } from "next/navigation";
 import { FaTrash, FaEdit, FaSearch, FaUsers } from "react-icons/fa";
 import styles from "../styles/SubjectSection.module.scss";
+
 
 export default function SubjectSection({
   initialSubjects = [],
@@ -14,6 +16,8 @@ export default function SubjectSection({
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [editingSubject, setEditingSubject] = useState(null);
   const [filter, setFilter] = useState("");
+  const router = useRouter();
+
   useEffect(() => {
     if (subjects.length === 0 && initialSubjects.length > 0) {
       setSubjects(initialSubjects);
@@ -74,6 +78,11 @@ export default function SubjectSection({
     .filter((s) => s && s.name)
     .filter((s) => s.name.toLowerCase().includes(filter.toLowerCase()));
 
+
+  const handleSubjectClick = (subjectId) => {
+    router.push(`/admin/topic/${subjectId}`);
+  };
+
   return (
     <div className={styles.subjectModule}>
       <div className={styles.subjectHeading}>
@@ -105,8 +114,11 @@ export default function SubjectSection({
           Array.from(
             new Map(filteredSubjects.map((s) => [s._id || s.id, s])).values()
           ).map((subject) => (
-            <div key={subject._id || subject.id} className={styles.subjectCard}>
-              {subject.image && (<img src={subject.image} alt={subject.name} />)}
+            <div
+              key={subject._id || subject.id}
+              className={styles.subjectCard}
+              onClick={() => handleSubjectClick(subject._id || subject.id)}
+            >              {subject.image && (<img src={subject.image} alt={subject.name} />)}
               <h3>{subject.name}</h3>
               <p>{subject.author}</p>
               <div className={styles.subjectStudent}>
