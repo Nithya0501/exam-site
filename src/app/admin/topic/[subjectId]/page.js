@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
-import styles from "../../../../styles/Topic.module.scss"; 
+import styles from "../../../../styles/Topic.module.scss";
 import { apiUrl } from "../../../../lib/api";
 
 
