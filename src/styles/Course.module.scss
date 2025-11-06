@@ -9,7 +9,7 @@
     align-items: center;
     flex-wrap: wrap;
     gap: 1rem;
-    padding: 0.5rem 1rem;
+    padding: 0.5rem;
 
     h1 {
       font-weight: 700;
@@ -135,7 +135,7 @@
     .filterWrapper {
       width: 100%;
       max-width: 400px;
-      margin: 0 auto;
+
     }
 
     .createBtn {
@@ -155,7 +155,7 @@
 
     .filterWrapper {
       width: 100%;
-      max-width: 100%;
+      max-width: 90%;
       padding: 6px 10px;
     }
 
@@ -282,7 +282,7 @@
   @media (min-width: 1200px) {
     .cardsContainer {
       grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 2.5rem;
+      gap: 3.5rem;
     }
 
     .courseCard img {

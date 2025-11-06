@@ -13,8 +13,6 @@ import {
   ChevronRight,
   LogOut,
   Book,
-  Calendar,
-
 } from "lucide-react";
 import { useState } from "react";
 import styles from "../styles/AdminSidebar.module.scss";
@@ -30,7 +28,6 @@ export default function AdminSidebar() {
     { href: "/admin/course", label: "Course", icon: <FileText size={18} /> },
     { href: "/admin/subjects", label: "Subject", icon: <Book size={18} /> },
     { href: "/admin/students", label: "Students", icon: <Users size={18} /> },
-    {href:"/admin/schedule" , label:"Schedule", icon:<Calendar size={18}/>},
     { href: "/admin/results", label: "Results", icon: <Award size={18} /> },
     { href: "/admin/settings", label: "Settings", icon: <Settings size={18} /> },
   ];
