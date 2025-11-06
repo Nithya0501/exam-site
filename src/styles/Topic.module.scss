@@ -1,0 +1,134 @@
+.topicsContainer {
+  padding: 20px;
+  background-color: #f8fafc;
+  min-height: 100vh;
+
+  .topicsTitle {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #1e293b;
+    margin-bottom: 1.5rem;
+    text-align: center;
+  }
+
+  .topicsList {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.5rem;
+    list-style: none;
+    padding: 13px;
+    justify-content: center;
+  }
+
+  .topicItem {
+    background: var(--bg-color);
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+    padding: 1.25rem;
+    transition: all 0.25s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+    }
+
+    h3 {
+      margin: 0 0 0.5rem 0;
+      font-size: 1.2rem;
+      color: var(--primary-color);
+      font-weight: 600;
+      word-wrap: break-word;
+    }
+
+    .topicLink {
+      text-decoration: none;
+      color: inherit;
+
+      &:hover {
+        text-decoration: none;
+      }
+    }
+
+    .topicDescription {
+      color: #475569;
+      font-size: 0.95rem;
+      line-height: 1.4;
+      margin-top: 0.4rem;
+      flex-grow: 1;
+    }
+  }
+
+  .noTopics {
+    text-align: center;
+    color: #64748b;
+    font-size: 1rem;
+    margin-top: 2rem;
+  }
+
+  .loading {
+    text-align: center;
+    color: #0f172a;
+    font-size: 1.1rem;
+    margin-top: 2rem;
+  }
+
+  .error {
+    text-align: center;
+    color: #dc2626;
+    font-weight: 500;
+    margin-top: 2rem;
+  }
+
+
+  @media (max-width: 1024px) {
+    .topicsTitle {
+      font-size: 1.6rem;
+    }
+
+    .topicsList {
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    }
+  }
+
+  @media (max-width: 768px) {
+    .topicsTitle {
+      font-size: 1.4rem;
+      text-align: left;
+      padding-left: 10px;
+    }
+
+    .topicsList {
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
+
+    .topicItem {
+      padding: 1rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .topicsTitle {
+      font-size: 1.3rem;
+      text-align: center;
+    }
+
+    .topicsList {
+      grid-template-columns: 1fr;
+    }
+
+    .topicItem {
+      padding: 0.9rem;
+
+      h3 {
+        font-size: 1rem;
+      }
+
+      .topicDescription {
+        font-size: 0.85rem;
+      }
+    }
+  }
+}
