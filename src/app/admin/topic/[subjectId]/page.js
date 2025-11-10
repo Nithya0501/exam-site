@@ -1,14 +1,14 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import styles from "../../../../styles/Topic.module.scss";
 import { apiUrl } from "../../../../lib/api";
 import TopicsForm from "@/components/TopicsForm";
-import { FaEdit, FaTrash } from "react-icons/fa";
+import { FaEdit, FaTrash, FaArrowLeft } from "react-icons/fa";
 
-export default function TopicsPage() {
+export default function TopicsPage({ params }) {
   const { subjectId } = useParams();
   const [topics, setTopics] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -33,7 +33,11 @@ export default function TopicsPage() {
 
     if (subjectId) fetchTopics();
   }, [subjectId]);
+  const router = useRouter();
 
+  const handleBackClick = () => {
+    router.back();
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -69,7 +73,16 @@ export default function TopicsPage() {
 
   return (
     <div className={styles.topicsContainer}>
+      <button
+        className={styles.backBtn}
+        type="button"
+        onClick={handleBackClick}
+      >
+        <FaArrowLeft />
+
+      </button>
       <div className={styles.topicBtn}>
+
         <h1 className={styles.topicsTitle}>
           Topics for Subject: {topics[0]?.subject?.name || subjectId}
         </h1>
