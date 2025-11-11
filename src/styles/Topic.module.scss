@@ -109,7 +109,6 @@
     margin-top: 2rem;
   }
 
-
   @media (max-width: 1024px) {
     .topicsTitle {
       font-size: 1.6rem;
@@ -165,8 +164,7 @@
     justify-content: space-between;
     align-items: center;
     gap: 1rem;
-    padding: .5rem;
-
+    padding: 0.5rem;
 
     .createBtn {
       color: var(--white);
@@ -175,9 +173,9 @@
       border: none;
       border-radius: 8px;
       padding: 10px 18px;
-      font-size: .95rem;
+      font-size: 0.95rem;
       font-weight: 500;
-      transition: all .3s;
+      transition: all 0.3s;
 
       &:hover {
         background-color: var(--hover-color);
@@ -221,10 +219,7 @@
   }
 }
 
-
-
 .topicActions {
-
   display: flex;
   justify-content: flex-end;
   gap: 0.4rem;
@@ -257,7 +252,6 @@
   }
 }
 
-
 .modalOverlay {
   position: fixed;
   top: 0;
@@ -272,7 +266,6 @@
 }
 
 .modalContent {
-
   background: #fff;
   border-radius: 16px;
   width: 90%;
@@ -281,12 +274,11 @@
 
   form {
     flex-direction: column;
-    gap: .8rem;
+    gap: 0.8rem;
     display: flex;
   }
 
   input {
-
     padding: 0.4rem;
     border-radius: 8px;
     border: 1px solid #d1d5db;
@@ -310,8 +302,7 @@
     border-radius: 8px;
     padding: 8px 12px;
     font-weight: 500;
-    transition: all .3s;
-
+    transition: all 0.3s;
   }
 
   .cancelBtn {
@@ -320,6 +311,66 @@
     border-radius: 8px;
     padding: 8px 16px;
     font-weight: 500;
-    transition: all .3s;
+    transition: all 0.3s;
+  }
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content:space-between;
+  margin-top: 20px;
+  gap: 15px;
+}
+
+.navigationButtons {
+  border: none;
+  color: #fff;
+  padding: 10px 22px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+
+  &:hover {
+    transform: translateY(-2px);
+  }
+
+  &:focus {
+    outline: 2px solid rgba(0, 0, 0, 0.2);
+    outline-offset: 2px;
+  }
+}
+
+
+.backButton {
+  background-color: #1870d6;
+
+  &:hover {
+    background-color: #005bb5;
+  }
+}
+
+
+.nextButton {
+  background-color: #085c20;
+
+  &:hover {
+    background-color: #019170;
+  }
+}
+
+
+.disabled {
+  background-color: #ccc !important;
+  color: #666 !important;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+
+  &:hover {
+    background-color: #ccc;
+    transform: none;
   }
 }
