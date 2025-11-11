@@ -1,60 +1,103 @@
 "use client";
-import { useState, useEffect } from "react";
-import styles from "../styles/QuestionSection.module.scss";
 
-export default function QuestionSection({ initialQuestions = [] }) {
+import { useState, useEffect } from "react";
+import { apiUrl } from "../lib/api"; 
+import styles from "../styles/QuestionSection.module.scss"; 
+
+export default function QuestionSection({ initialQuestions = [], topicId }) {
   const [questions, setQuestions] = useState(initialQuestions);
-  const [showEditor, setShowEditor] = useState({});
-  const [codes, setCodes] = useState({});
-  const [outputs, setOutputs] = useState({});
+  const [newQuestion, setNewQuestion] = useState("");
+  const [adding, setAdding] = useState(false);
+  const [error, setError] = useState(null);
+  const [showForm, setShowForm] = useState(false); 
 
   useEffect(() => {
-    const initialCodes = {};
-    const initialOutputs = {};
-    const initialShow = {};
+    setQuestions(initialQuestions);
+  }, [initialQuestions]);
 
-    questions.forEach((q) => {
-      initialCodes[q._id] = q.defaultCode || "";
-      initialOutputs[q._id] = "";
-      initialShow[q._id] = false;
-    });
+  const handleAddQuestion = async () => {
+    if (!newQuestion.trim()) return;
 
-    setCodes(initialCodes);
-    setOutputs(initialOutputs);
-    setShowEditor(initialShow);
-  }, [questions]);
+    setAdding(true);
+    setError(null);
 
-  const handleTryClick = (id) => setShowEditor((prev) => ({ ...prev, [id]: true }));
-  const handleCodeChange = (id, value) => setCodes((prev) => ({ ...prev, [id]: value }));
-  const handleRun = (id) => setOutputs((prev) => ({ ...prev, [id]: codes[id] }));
-  if (questions.length === 0) return <p>No questions found.</p>;
+    try {
+      const res = await fetch(apiUrl("/api/questions"), {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ topic: topicId, question: newQuestion }),
+      });
+
+      if (!res.ok) throw new Error("Failed to add question");
+
+      const createdQuestion = await res.json();
+      setQuestions((prev) => [createdQuestion, ...prev]);
+      setNewQuestion("");
+      setShowForm(false); 
+    } catch (err) {
+      console.error(err);
+      setError("Failed to add question");
+    } finally {
+      setAdding(false);
+    }
+  };
+
+  const handleCancel = () => {
+    setNewQuestion("");
+    setError(null);
+    setShowForm(false);
+  };
 
   return (
-    <ul className={styles.section}>
-      {questions.map((q, index) => (
-        <li key={q._id}>
-          <h3>
-            {index + 1}. {q.question}
-          </h3>
-          <p>{q.answer}</p>
+    <div className={styles.questionSection}>
+      {!showForm && (
+        <button
+          onClick={() => setShowForm(true)}
+          className={styles.addQuestionButton}
+        >
+          + Add Question
+        </button>
+      )}
 
-          {!showEditor[q._id] ? (
-            <button onClick={() => handleTryClick(q._id)}>Try It Yourself</button>
-          ) : (
-            <div className={styles.editor}>
-              <textarea
-                value={codes[q._id]}
-                onChange={(e) => handleCodeChange(q._id, e.target.value)}
-                placeholder="Type your code here..."
-              />
-              <div className={styles.buttons}>
-                <button onClick={() => handleRun(q._id)}>Run</button>
-              </div>
-              <div className={styles.output} dangerouslySetInnerHTML={{ __html: outputs[q._id] }} />
-            </div>
-          )}
-        </li>
-      ))}
-    </ul>
+      {showForm && (
+        <div className={styles.addQuestionContainer}>
+          <input
+            type="text"
+            value={newQuestion}
+            onChange={(e) => setNewQuestion(e.target.value)}
+            placeholder="Enter new question"
+            className={styles.addQuestionInput}
+          />
+          <button
+            onClick={handleAddQuestion}
+            disabled={adding}
+            className={styles.addQuestion}
+          >
+            {adding ? "Adding..." : "Add"}
+          </button>
+          <button
+            onClick={handleCancel}
+            disabled={adding}
+            className={styles.cancelButton}
+          >
+            Cancel
+          </button>
+        </div>
+      )}
+
+      {error && <p className={styles.error}>{error}</p>}
+
+      {!questions || questions.length === 0 ? (
+        <p>No questions found.</p>
+      ) : (
+        <ul className={styles.questionsList}>
+          {questions.map((q, index) => (
+            <li key={q._id}>
+              {index + 1}. {q.question}
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
   );
 }

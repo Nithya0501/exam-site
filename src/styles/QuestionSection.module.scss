@@ -1,237 +1,150 @@
-.container {
-    position: relative;
-    padding: 30px;
-    max-width: 1000px;
-    margin: 0 auto;
+.questionSection {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
 
-    h1 {
-        font-size: 32px;
-        margin-bottom: 12px;
-        color: #222;
+    .addQuestionButton {
+        padding: 8px 16px;
+        background-color: var(--btn-color);
+        color: #fff;
+        font-weight: 500;
+        width: 100%;
+        max-width: 160px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background 0.2s;
         text-align: center;
+        
+
+        &:hover:not(:disabled) {
+            background-color: var(--hover-color);
+        }
     }
 
-    h2 {
-        font-size: 24px;
-        margin-bottom: 24px;
-        color: #555;
-       
+    .addQuestionContainer {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        flex-wrap: wrap;
     }
 
-    p {
+    .addQuestionInput {
+        flex: 1 1 200px;
+        padding: 10px 12px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
         font-size: 16px;
-        color: #333;
-        line-height: 1.6;
+        transition: border-color 0.2s;
+        min-width: 0;
+
+        &:focus {
+            outline: none;
+            border-color: var(--btn-color);
+            box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.3);
+        }
     }
 
-    ul {
+    .addQuestion {
+        padding: 8px 16px;
+        background-color: var(--btn-color);
+        color: #fff;
+        font-weight: 500;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background 0.2s;
+        text-align: center;
+
+        &:hover {
+            background-color: var(--hover-color);
+        }
+    }
+
+    .cancelButton {
+        padding: 8px 16px;
+        font-weight: 500;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background 0.2s;
+        background-color: #f3f4f6;
+        color: #111;
+
+        &:hover {
+            background-color: #e5e7eb;
+        }
+    }
+
+    .error {
+        color: #dc2626;
+        font-size: 14px;
+    }
+
+    .questionsList {
         list-style: none;
         padding: 0;
         margin: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+
+        li {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            padding: 16px;
+            font-size: 16px;
+            font-weight: 500;
+            color: #333;
+            word-wrap: break-word;
+        }
     }
 
+   
     @media (max-width: 1024px) {
-        padding: 25px;
-        max-width: 850px;
-
-        h1 {
-            font-size: 28px;
-        }
-
-        h2 {
-            font-size: 22px;
-        }
-
-        p {
+        .addQuestionInput {
             font-size: 15px;
+        }
+
+        .questionsList li {
+            font-size: 15px;
+            padding: 14px;
         }
     }
 
     @media (max-width: 768px) {
-        padding: 20px;
-        max-width: 700px;
-
-        h1 {
-            font-size: 26px;
+        .addQuestionContainer {
+            flex-direction: column;
+            align-items: stretch;
         }
 
-        h2 {
-            font-size: 20px;
+        .addQuestion,
+        .cancelButton {
+            width: 100%;
         }
 
-        p {
+        .questionsList li {
             font-size: 14px;
+            padding: 12px;
         }
     }
 
     @media (max-width: 480px) {
-        padding: 15px;
-        max-width: 100%;
 
-        h1 {
-            font-size: 22px;
+        .addQuestionInput,
+        .addQuestion,
+        .cancelButton {
+            font-size: 14px;
+            padding: 10px;
         }
 
-        h2 {
-            font-size: 18px;
-        }
-
-        p {
+        .questionsList li {
             font-size: 13px;
-        }
-    }
-}
-
-
-.section {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-
-    li {
-        background: #ffffff;
-        border: 1px solid #e0e0e0;
-        border-radius: 12px;
-        padding: 20px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
-
-        &:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        }
-
-        h3 {
-            font-size: 1.1rem;
-            color: #222;
-            margin-bottom: 10px;
-            font-weight: 600;
-        }
-
-        p {
-            font-size: 0.95rem;
-            color: #555;
-            margin-bottom: 15px;
-            line-height: 1.6;
-        }
-
-        button {
-            background-color: var(--btn-color);
-            color: #fff;
-            border: none;
-            border-radius: 8px;
-            padding: 8px 14px;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: background-color 0.2s ease;
-
-            &:hover {
-                background-color: var(--hover-color);
-            }
-        }
-
-        .editor {
-            margin-top: 15px;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-
-            textarea {
-                height: 155px;
-                padding: 12px;
-                font-size: 0.95rem;
-                border: 1px solid var(--border-color);
-                border-radius: 8px;
-                color: #333;
-                resize: vertical;
-                transition: border-color 0.2s ease;
-
-                &:focus {
-                    outline: none;
-                    border-color: var(--border-color);
-                    background-color: #fff;
-                }
-            }
-
-            .buttons {
-                display: flex;
-                justify-content: flex-start;
-                gap: 10px;
-
-                button {
-                    background-color: var(--btn-color);
-
-                    &:hover {
-                        background-color: var(--hover-color);
-                    }
-                }
-            }
-
-            .output {
-                border: 1px solid var(--border-color);
-                border-radius: 8px;
-                padding: 12px;
-                background-color: #fff;
-                min-height: 60px;
-                font-size: 0.9rem;
-                color: #333;
-                overflow-x: auto;
-                word-wrap: break-word;
-            }
-        }
-    }
-}
-
-@media (max-width: 768px) {
-    .section {
-        li {
-            padding: 15px;
-
-            h3 {
-                font-size: 1rem;
-            }
-
-            p {
-                font-size: 0.9rem;
-            }
-
-            .editor {
-                textarea {
-                    height: 150px;
-                    font-size: 0.9rem;
-                }
-
-                .output {
-                    font-size: 0.85rem;
-                }
-            }
-        }
-    }
-}
-
-@media (max-width: 480px) {
-    .section {
-        li {
-            padding: 12px;
-
-            button {
-                width: 100%;
-                text-align: center;
-                padding: 10px;
-            }
-
-            .editor {
-                .buttons {
-                    flex-direction: column;
-
-                    button {
-                        width: 100%;
-                    }
-                }
-            }
+            padding: 10px;
         }
     }
 }

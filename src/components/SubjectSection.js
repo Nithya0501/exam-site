@@ -23,7 +23,7 @@ export default function SubjectSection({
       setSubjects(initialSubjects);
     }
   }, [initialSubjects]);
-
+  
 
   const openModal = () => {
     setEditingSubject(null);
@@ -85,6 +85,7 @@ export default function SubjectSection({
 
   return (
     <div className={styles.subjectModule}>
+     
       <div className={styles.subjectHeading}>
         <div>
           <h1>Subjects Management</h1>
@@ -136,10 +137,11 @@ export default function SubjectSection({
                   <p>{subject.duration} weeks</p>
                 </div>
                 <div className={styles.cardActions}>
-                  <button onClick={() => handleEdit(subject)}>
+                  <button onClick={(e) => { e.stopPropagation(); handleEdit(subject) }
+                  }>
                     <FaEdit />
                   </button>
-                  <button onClick={() => handleDelete(subject)}>
+                  <button onClick={(e) => { e.stopPropagation(); handleDelete(subject) }}>
                     <FaTrash />
                   </button>
                 </div>

@@ -1,17 +1,21 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import styles from "../../../../styles/Topic.module.scss";
 import { apiUrl } from "../../../../lib/api";
+import TopicsForm from "@/components/TopicsForm";
+import { FaEdit, FaTrash, FaArrowLeft } from "react-icons/fa";
 
-
-export default function TopicsPage() {
+export default function TopicsPage({ params }) {
   const { subjectId } = useParams();
   const [topics, setTopics] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [editingId, setEditingId] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+  const [formData, setFormData] = useState({ topic: "", description: "" });
 
   useEffect(() => {
     const fetchTopics = async () => {
@@ -29,32 +33,111 @@ export default function TopicsPage() {
 
     if (subjectId) fetchTopics();
   }, [subjectId]);
+  const router = useRouter();
+
+  const handleBackClick = () => {
+    router.back();
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!formData.topic || !formData.description) return alert("Fill both fields!");
+
+    if (editingId) {
+      setTopics(topics.map((t) => (t._id === editingId ? { ...t, ...formData } : t)));
+      setEditingId(null);
+    } else {
+      setTopics([...topics, { ...formData, _id: Date.now() }]);
+    }
+
+    setFormData({ topic: "", description: "" });
+    setShowModal(false);
+  };
+
+
+  const handleEdit = (topic) => {
+    setFormData({ topic: topic.topic, description: topic.description });
+    setEditingId(topic._id);
+    setShowModal(true);
+  };
+
+  const handleDelete = (id) => {
+    if (confirm("Are you sure you want to delete this topic?")) {
+      setTopics(topics.filter((t) => t._id !== id));
+    }
+  };
+
 
   if (loading) return <p className={styles.loading}>Loading topics...</p>;
   if (error) return <p className={styles.error}>{error}</p>;
 
   return (
     <div className={styles.topicsContainer}>
-      <h1 className={styles.topicsTitle}>
-        Topics for Subject: {topics[0]?.subject?.name || subjectId}
-      </h1>
+      <button
+        className={styles.backBtn}
+        type="button"
+        onClick={handleBackClick}
+      >
+        <FaArrowLeft />
+
+      </button>
+      <div className={styles.topicBtn}>
+
+        <h1 className={styles.topicsTitle}>
+          Topics for Subject: {topics[0]?.subject?.name || subjectId}
+        </h1>
+
+        <button
+          className={styles.createBtn}
+          onClick={() => {
+            setShowModal(true);
+            setEditingId(null);
+            setFormData({ topic: "", description: "" });
+          }}
+        >
+          Create New Topic
+        </button>
+      </div>
+      {showModal && (
+        <TopicsForm
+          formData={formData}
+          setFormData={setFormData}
+          onSubmit={handleSubmit}
+          onCancel={() => setShowModal(false)}
+          editing={!!editingId}
+        />
+      )}
+
 
       {topics.length > 0 ? (
         <ul className={styles.topicsList}>
           {topics.map((t) => (
             <li key={t._id} className={styles.topicItem}>
-              <h3>
-                <Link href={`/admin/topics/${t._id}`} className={styles.topicLink}>
-                  {t.topic}
-                </Link>
-              </h3>
-              <p className={styles.topicDescription}>{t.description}</p>
+              <div className={styles.topicHeader}>
+                <h3>
+                  <Link href={`/admin/topics/${t._id}`} className={styles.topicLink}>
+                    {t.topic}
+                  </Link>
+                </h3>
+                <p className={styles.topicDescription}>{t.description}</p>
+              </div>
+
+              <div className={styles.topicActions}>
+                <button className={styles.editBtn} onClick={() => handleEdit(t)}>
+                  <FaEdit />
+                </button>
+                <button className={styles.deleteBtn} onClick={() => handleDelete(t._id)}>
+                  <FaTrash />
+                </button>
+              </div>
             </li>
           ))}
         </ul>
       ) : (
         <p className={styles.noTopics}>No topics found for this subject.</p>
       )}
+
     </div>
+
   );
 }

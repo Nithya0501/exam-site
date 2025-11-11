@@ -1,58 +1,115 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useParams} from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { apiUrl } from "../../../../lib/api";
 import QuestionSection from "../../../../components/QuestionSection";
-import styles from "../../../../styles/QuestionSection.module.scss";
+import styles from "../../../../styles/Topic.module.scss"; 
 
 export default function TopicDetailPage() {
   const { topicId } = useParams();
-  const [topic, setTopic] = useState(null);
+  const router = useRouter();
+  const [topics, setTopics] = useState([]);
   const [questions, setQuestions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    const fetchTopics = async () => {
+      try {
+        const res = await fetch(apiUrl(`/api/topics`));
+        const data = await res.json();
+        if (Array.isArray(data)) setTopics(data);
+      } catch (err) {
+        console.error("Error fetching topics:", err);
+      }
+    };
+    fetchTopics();
+  }, []);
+  
 
   useEffect(() => {
     if (!topicId) return;
-
-    const fetchTopicAndQuestions = async () => {
+    const fetchQuestions = async () => {
       setLoading(true);
       setError(null);
-
       try {
-        const topicRes = await fetch(apiUrl(`/api/topics/topic/${topicId}`));
-        if (!topicRes.ok) throw new Error("Topic not found");
-        const topicData = await topicRes.json();
-        setTopic(topicData);
-
-        const questionRes = await fetch(apiUrl(`/api/questions/topic/${topicId}`));
-        const questionData = await questionRes.json();
-        setQuestions(Array.isArray(questionData) ? questionData : []);
+        const res = await fetch(apiUrl(`/api/questions/topic/${topicId}`));
+        if (!res.ok) throw new Error("Failed to fetch questions");
+        const data = await res.json();
+        setQuestions(Array.isArray(data) ? data : []);
       } catch (err) {
         console.error(err);
-        setError(err.message || "Something went wrong");
+        setError("Failed to load questions");
       } finally {
         setLoading(false);
       }
     };
+    fetchQuestions();
+  }, [topicId])
 
-    fetchTopicAndQuestions();
-  }, [topicId]);
+  useEffect(() => {
+    const index = topics.findIndex((t) => t._id === topicId);
+    if (index !== -1) setCurrentIndex(index);
+  }, [topics, topicId]);
 
-  if (loading) return <p>Loading topic and questions...</p>;
-  if (error) return <p style={{ color: "red" }}>Error: {error}</p>;
-  if (!topic) return <p>Topic not found</p>;
+  
+
+  const handleNext = () => {
+    if (currentIndex < topics.length - 1) {
+      const nextTopic = topics[currentIndex + 1];
+      router.push(`/admin/topics/${nextTopic._id}`);
+    }
+  };
+  const handlePrev = () => {
+    if (currentIndex > 0) {
+      const prevTopic = topics[currentIndex - 1];
+      router.push(`/admin/topics/${prevTopic._id}`);
+    }
+  };
+  if (loading) return <p>Loading questions...</p>;
+  if (error) return <p className={styles.error}>{error}</p>;
 
   return (
     <div className={styles.container}>
-      <h1>{topic.topic}</h1>
-      <h2>Questions & Try-It-Yourself</h2>
+      <div className={styles.topBar}>
+        {topics[currentIndex] && (
+          <h2 className={styles.topicTitle}>
+            {topics[currentIndex].topic}
+          </h2>
+        )}
+      </div>
+    
+      <QuestionSection initialQuestions={questions} topicId={topicId}  />
+      <div className={styles.buttonContainer}>
+        <button
+          onClick={handlePrev}
+          disabled={currentIndex === 0}
+          className={`${styles.navigationButtons} ${styles.backButton} ${currentIndex === 0 ? styles.disabled : ""
+            }`}
+        >
+          ← Back
+        </button>
 
-      <QuestionSection initialQuestions={questions} />
+        <button
+          onClick={handleNext}
+          disabled={currentIndex === topics.length - 1}
+          className={`${styles.navigationButtons} ${styles.nextButton} ${currentIndex === topics.length - 1 ? styles.disabled : ""
+            }`}
+        >
+          Next →
+        </button>
+      </div>
+
+
     </div>
+
   );
+
 }
+
+
 
 
 
