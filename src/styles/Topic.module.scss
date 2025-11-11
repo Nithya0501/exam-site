@@ -317,7 +317,7 @@
 
 .buttonContainer {
   display: flex;
-  justify-content:space-between;
+  justify-content: space-between;
   margin-top: 20px;
   gap: 15px;
 }
@@ -343,21 +343,19 @@
   }
 }
 
-
+.topicTitle{
+  text-align: center;
+}
 .backButton {
-  background-color: #1870d6;
-
-  &:hover {
-    background-color: #005bb5;
-  }
+  color: #1e293b;
 }
 
 
 .nextButton {
-  background-color: #085c20;
+  background-color: var(--btn-color);
 
   &:hover {
-    background-color: #019170;
+    background-color: var(--hover-color);
   }
 }
 

@@ -81,7 +81,7 @@ export default function TopicDetailPage() {
         )}
       </div>
     
-      <QuestionSection initialQuestions={questions} />
+      <QuestionSection initialQuestions={questions} topicId={topicId}  />
       <div className={styles.buttonContainer}>
         <button
           onClick={handlePrev}
