@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { apiUrl } from "../../../../lib/api";
 import QuestionSection from "../../../../components/QuestionSection";
-import styles from "../../../../styles/Topic.module.scss"; 
+import styles from "../../../../styles/Topic.module.scss";
 
 export default function TopicDetailPage() {
   const { topicId } = useParams();
@@ -27,7 +27,7 @@ export default function TopicDetailPage() {
     };
     fetchTopics();
   }, []);
-  
+
 
   useEffect(() => {
     if (!topicId) return;
@@ -54,7 +54,7 @@ export default function TopicDetailPage() {
     if (index !== -1) setCurrentIndex(index);
   }, [topics, topicId]);
 
-  
+
 
   const handleNext = () => {
     if (currentIndex < topics.length - 1) {
@@ -80,8 +80,12 @@ export default function TopicDetailPage() {
           </h2>
         )}
       </div>
-    
-      <QuestionSection initialQuestions={questions} topicId={topicId}  />
+
+      <QuestionSection
+        initialQuestions={questions}
+        topicId={topicId}
+        subjectId={topics[currentIndex]?.subject?._id}
+      />
       <div className={styles.buttonContainer}>
         <button
           onClick={handlePrev}
