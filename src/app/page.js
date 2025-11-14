@@ -11,6 +11,9 @@ export default function Home() {
             <Link href="/admin/login" className="btn primary">
               Admin Login
             </Link>
+            <Link href="/user/login" className="btn primary">
+              User Login
+            </Link>
        
           </div>
         </div>

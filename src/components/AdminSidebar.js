@@ -35,6 +35,7 @@ export default function AdminSidebar() {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
     router.push("/admin/login");
+  
   };
 
   return (
