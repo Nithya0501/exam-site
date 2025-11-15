@@ -9,47 +9,58 @@ import { AiFillEdit, AiFillDelete, AiFillHome } from "react-icons/ai";
 export default function QuestionSection({ initialQuestions = [], topicId, subjectId }) {
   const router = useRouter();
   const [questions, setQuestions] = useState(initialQuestions);
-  const [newQuestion, setNewQuestion] = useState("");
-  const [editingQuestionId, setEditingQuestionId] = useState(null);
-  const [editingText, setEditingText] = useState("");
+
+  const [newQ, setNewQ] = useState({
+    question: "",
+    answer: "",
+    defaultCode: ""
+  });
+
+  const [editId, setEditId] = useState(null);
+  const [editQ, setEditQ] = useState({
+    question: "",
+    answer: "",
+    defaultCode: ""
+  });
+
+  const [showForm, setShowForm] = useState(false);
   const [adding, setAdding] = useState(false);
   const [error, setError] = useState(null);
-  const [showForm, setShowForm] = useState(false);
 
   useEffect(() => {
     setQuestions(initialQuestions);
   }, [initialQuestions]);
 
-  
   const handleHomeClick = () => {
-    if (subjectId) {
-      router.push(`/admin/topic/${subjectId}`); 
-    } else {
-      router.push("/admin/topics"); 
-    }
+    if (subjectId) router.push(`/admin/topic/${subjectId}`);
+    else router.push("/admin/topics");
   };
 
-
   const handleAddQuestion = async () => {
-    if (!newQuestion.trim()) return;
+    if (!newQ.question.trim()) return;
 
     setAdding(true);
-    setError(null);
 
     try {
       const res = await fetch(apiUrl("/api/questions"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ topic: topicId, question: newQuestion }),
+        body: JSON.stringify({
+          topic: topicId,
+          question: newQ.question,
+          answer: newQ.answer,
+          defaultCode: newQ.defaultCode
+        }),
       });
 
-      if (!res.ok) throw new Error("Failed to add question");
-      const createdQuestion = await res.json();
-      setQuestions((prev) => [createdQuestion, ...prev]);
-      setNewQuestion("");
+      if (!res.ok) throw new Error("Error adding question");
+
+      const created = await res.json();
+      setQuestions((prev) => [created, ...prev]);
+
+      setNewQ({ question: "", answer: "", defaultCode: "" });
       setShowForm(false);
-    } catch (err) {
-      console.error(err);
+    } catch {
       setError("Failed to add question");
     } finally {
       setAdding(false);
@@ -59,127 +70,161 @@ export default function QuestionSection({ initialQuestions = [], topicId, subjec
   const handleDelete = async (id) => {
     try {
       const res = await fetch(apiUrl(`/api/questions/${id}`), { method: "DELETE" });
-      if (!res.ok) throw new Error("Failed to delete question");
+      if (!res.ok) throw new Error("Error deleting");
+
       setQuestions((prev) => prev.filter((q) => q._id !== id));
-    } catch (err) {
-      console.error(err);
+    } catch {
       setError("Failed to delete question");
     }
   };
 
   const handleEdit = (q) => {
-    setEditingQuestionId(q._id);
-    setEditingText(q.question);
+    setEditId(q._id);
+    setEditQ({
+      question: q.question,
+      answer: q.answer || "",
+      defaultCode: q.defaultCode || ""
+    });
   };
 
+  
   const handleSaveEdit = async (id) => {
-    if (!editingText.trim()) return;
-
     try {
       const res = await fetch(apiUrl(`/api/questions/${id}`), {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ question: editingText }),
+        body: JSON.stringify(editQ),
       });
-      if (!res.ok) throw new Error("Failed to update question");
+
+      if (!res.ok) throw new Error("Error saving");
 
       const updated = await res.json();
-      setQuestions((prev) => prev.map((q) => (q._id === id ? updated : q)));
-      setEditingQuestionId(null);
-      setEditingText("");
-    } catch (err) {
-      console.error(err);
+
+      setQuestions((prev) =>
+        prev.map((q) => (q._id === id ? updated : q))
+      );
+
+      setEditId(null);
+    } catch {
       setError("Failed to update question");
     }
-  };
-
-  const handleCancelEdit = () => {
-    setEditingQuestionId(null);
-    setEditingText("");
-  };
-
-  const handleCancel = () => {
-    setNewQuestion("");
-    setError(null);
-    setShowForm(false);
   };
 
   return (
     <div className={styles.questionSection}>
       <div className={styles.btn}>
-   
-        <button type="button" className={styles.homeButton} onClick={handleHomeClick}>
-          <AiFillHome/>
-  
+        <button className={styles.homeButton} onClick={handleHomeClick}>
+          <AiFillHome />
         </button>
 
         {!showForm && (
-          <button onClick={() => setShowForm(true)} className={styles.addQuestionButton}>
+          <button className={styles.addQuestionButton} onClick={() => setShowForm(true)}>
             + Add Question
           </button>
         )}
       </div>
 
       {showForm && (
-        <div className={styles.addQuestionContainer}>
-          <input
-            type="text"
-            value={newQuestion}
-            onChange={(e) => setNewQuestion(e.target.value)}
-            placeholder="Enter new question"
-            className={styles.addQuestionInput}
-          />
-          <button onClick={handleAddQuestion} disabled={adding} className={styles.addQuestion}>
-            {adding ? "Adding..." : "Add"}
-          </button>
-          <button onClick={handleCancel} disabled={adding} className={styles.cancelButton}>
-            Cancel
-          </button>
+        <div className={styles.formBox}>
+          <div className={styles.questionForm}>
+
+            <input
+              type="text"
+              className={styles.input}
+              placeholder="Enter Question"
+              value={newQ.question}
+              onChange={(e) => setNewQ({ ...newQ, question: e.target.value })}
+            />
+
+            <textarea
+              className={styles.textarea}
+              placeholder="Enter Answer"
+              value={newQ.answer}
+              onChange={(e) => setNewQ({ ...newQ, answer: e.target.value })}
+            />
+
+            <textarea
+              className={styles.textarea}
+              placeholder="Enter Default Code"
+              value={newQ.defaultCode}
+              onChange={(e) => setNewQ({ ...newQ, defaultCode: e.target.value })}
+            />
+
+            <div className={styles.questionSubmit}>
+              <button className={styles.saveBtn} disabled={adding} onClick={handleAddQuestion}>
+                {adding ? "Adding..." : "Submit"}
+              </button>
+              <button className={styles.cancelButton} onClick={() => setShowForm(false)}>
+                Cancel
+              </button>
+            </div>
+
+          </div>
         </div>
       )}
 
       {error && <p className={styles.error}>{error}</p>}
 
-      {!questions || questions.length === 0 ? (
+      {questions.length === 0 ? (
         <p>No questions found.</p>
       ) : (
         <ul className={styles.questionsList}>
-          {questions.map((q, index) => (
+          {questions.map((q, i) => (
             <li key={q._id} className={styles.questionItem}>
-              <span>
-                {index + 1}.{" "}
-                {editingQuestionId === q._id ? (
-                  <input
-                    type="text"
-                    value={editingText}
-                    onChange={(e) => setEditingText(e.target.value)}
-                    className={styles.editInput}
-                  />
-                ) : (
-                  q.question
-                )}
-              </span>
+
+              <div>
+                <b>{i + 1}. {q.question}</b>
+                <p><b>Answer:</b> {q.answer}</p>
+                <pre><b>Code:</b> {q.defaultCode}</pre>
+              </div>
+
               <span className={styles.actionIcons}>
-                {editingQuestionId === q._id ? (
-                  <>
-                    <button onClick={() => handleSaveEdit(q._id)} className={styles.saveButton}>
-                      Save
-                    </button>
-                    <button onClick={handleCancelEdit} className={styles.cancelButton}>
-                      Cancel
-                    </button>
-                  </>
-                ) : (
-                  <>
-                    <AiFillEdit className={styles.editBtn} onClick={() => handleEdit(q)} />
-                    <AiFillDelete className={styles.deleteBtn} onClick={() => handleDelete(q._id)} />
-                  </>
-                )}
+                <AiFillEdit className={styles.editBtn} onClick={() => handleEdit(q)} />
+                <AiFillDelete className={styles.deleteBtn} onClick={() => handleDelete(q._id)} />
               </span>
+
+              {editId === q._id && (
+                <div className={styles.editBox}>
+                  <div className={styles.questionForm}>
+
+                    <input
+                      type="text"
+                      className={styles.input}
+                      value={editQ.question}
+                      onChange={(e) => setEditQ({ ...editQ, question: e.target.value })}
+                    />
+
+                    <textarea
+                      className={styles.textarea}
+                      value={editQ.answer}
+                      onChange={(e) => setEditQ({ ...editQ, answer: e.target.value })}
+                    />
+
+                    <textarea
+                      className={styles.textarea}
+                      value={editQ.defaultCode}
+                      onChange={(e) => setEditQ({ ...editQ, defaultCode: e.target.value })}
+                    />
+
+                    <div className={styles.questionSubmit}>
+                      <button className={styles.saveBtn} onClick={() => handleSaveEdit(q._id)}>
+                        Update
+                      </button>
+
+                      <button className={styles.cancelButton} onClick={() => setEditId(null)}>
+                        Cancel
+                      </button>
+                    </div>
+
+                  </div>
+                </div>
+              )}
+
             </li>
           ))}
         </ul>
       )}
+
     </div>
   );
 }
